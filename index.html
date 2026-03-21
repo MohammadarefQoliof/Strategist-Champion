@@ -6,6 +6,7 @@
     <title>Strategist Champion</title>
     <link rel="stylesheet" href="./CSS/index.css">
     <link rel="icon" href="./images/chessIcon.png">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
@@ -20,7 +21,7 @@
                 <h1>Training Goals</h1>
                 <p>0/5 plans used</p>
             </div>
-            <button class="btn"><span>+</span> New</button>
+            <button class="btn hoverBtn"><span>+</span> New</button>
         </div>
     </div>
 
@@ -35,7 +36,7 @@
                 <div class="modeSec">
                     <h1 class="modeTitle">Mode</h1>
                     <div>
-                        <select class="modeInput">
+                        <select class="modeInput input">
                             <option value="Self Improvement">Self Improvement</option>
                             <option value="Competition Prep">Competition Prep</option>
                         </select>
@@ -44,14 +45,47 @@
                 <div class="platformSec">
                     <h1 class="platformTitle">Training Platform</h1>
                     <div>
-                        <select class="platformInput">
+                        <select class="platformInput input">
                             <option value="Chess.com">Chess.com</option>
                             <option value="Lichess">Lichess</option>
                         </select>
                     </div>
                 </div>
             </div>
-            
+            <div class="ratingDuration">
+                <div class="ratingSec">
+                    <h1 class="ratingTitle">Starting Rating</h1>
+                    <input type="number" class="ratingInput input" value="1200" placeholder="1200">
+                </div>
+                <div class="durationSec">
+                    <h1 class="durationTitle">Duration</h1>
+                    <div class="timeDate">
+                        <div class="time">
+                            <input type="number" class="durationInput input" value="1">
+                        </div>
+                        <div class="date">
+                            <select class="dateInput input">
+                                <option value="days">Days</option>
+                                <option value="weeks">Weeks</option>
+                                <option value="months">Months</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="checkFide">
+                <label for="fide">
+                    <input type="checkbox" id="fide">
+                    <div>
+                        <h1>Also track FIDE rating</h1>
+                        <p>Adds two separate phases: a practice period and a competition period</p>
+                    </div>
+                </label>
+            </div>
+            <div class="btns">
+                <button class="btn cancelBtn">Cancel</button>
+                <button class="btn saveBtn">Create Goal</button>
+            </div>
         </div>
     </div>
 

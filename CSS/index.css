@@ -84,6 +84,7 @@ body{
 .btn-primary{
     width: 150px;
     font-size: 15px;
+    transition: 0.2s;
 }
 .targetLogo{
     height: 64px;
@@ -120,13 +121,14 @@ body{
 }
 .inputCard{
     width: 30%;
-    height: 700px;
+    /* height: 700px; */
+    height: auto;
     background-color: rgb(17, 17, 17);
     border-radius: 20px;
     animation: scaleAnimate 0.3s forwards;
     display: flex;
     flex-direction: column;
-    padding: 20px;
+    padding: 20px 20px 60px 20px;
     position: absolute;
 }
 @keyframes scaleAnimate {
@@ -151,6 +153,7 @@ body{
     width: 100%;
     height: 40px;
     font-size: 20px;
+    color: white;
     border-radius: 14px;
     padding: 10px;
     background-color: rgb(23, 23, 23);
@@ -159,29 +162,146 @@ body{
 .modePlatform{
     width: 100%;
     height: 60px;
-    margin: 20px 0 0 0;
+    margin: 15px 0 0 0;
     display: flex;
     align-items: center;
     color: grey;
     font-size: 8px;
 }
 .modeInput{
-    width: 200px;
-    height: 40px;
-    border-radius: 14px;
-    margin: 10px 20px 0 0;
-    background-color: rgb(23, 23, 23);
-    border: 2px solid rgb(35, 35, 35);
-    padding: 5px;
-    color: white;
+    margin: 5px 20px 0 0;
 }
 .platformInput{
+    margin: 5px 0 0 0;
+}
+.input{
     width: 200px;
     height: 40px;
     border-radius: 14px;
-    margin: 10px 0 0 0;
     color: white;
     padding: 5px;
     background-color: rgb(23, 23, 23);
     border: 2px solid rgb(35, 35, 35);
+}
+.ratingDuration{
+    width: 100%;
+    height: 60px;
+    margin: 20px 0 0 0;
+    display: flex;
+    align-items: center;
+    color: grey;
+    font-size: 8px;
+}
+.durationInput{
+    width: 77px;
+    margin: 10px 0 0 0;
+    padding: 8px;
+}
+.ratingInput{
+    margin: 10px 20px 0 0;
+    padding: 7px;
+}
+.dateInput{
+    width: 110px;
+    margin: 10px 0 0 10px;
+}
+.checkFide{
+    width: 100%;
+    height: auto;
+    border-radius: 13px;
+    border: 2px solid rgb(22, 22, 22);
+    margin: 30px 0 0 0;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    color: white;
+}
+.checkFide #fide{
+    width: 27px;
+    height: 27px;
+    margin: 0 10px 0 0;
+}
+.checkFide label{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.timeDate{
+    display: flex;
+}
+.checkFide label h1{
+    font-size: 20px;
+}
+.checkFide label p{
+    font-size: 15px;
+    margin: 7px 0 0 0;
+    color: grey !important;
+}
+.btns{
+    display: flex;
+    position: absolute;
+    bottom: 10px;
+    right: 20px;
+    gap: 10px;
+}
+.cancelBtn{
+    width: 100px;
+    background-color: transparent;
+    color: white;
+    transition: 0.4s;
+}
+.cancelBtn:hover{
+    background-color: rgb(27, 27, 27);
+}
+.saveBtn{
+    width: 150px;
+    transition: 0.2s;
+}
+.hoverBtn{
+    transition: 0.2s;
+}
+.saveBtn:hover, .hoverBtn:hover, .btn-primary:hover{
+    box-shadow: 0 7px 15px rgba(255, 166, 0, 0.2);
+}
+.animate{
+    animation: closePage 0.17s forwards;
+}
+@keyframes closePage {
+    to{
+        transform: scale(0.9);
+        opacity: 0;
+    }
+}
+.inputTitle{
+    font-size: 20px;
+    margin: 10px 0;
+}
+.fideInputSpace{
+    width: 200px;
+}
+.fideRatingInput{
+    font-size: 15px;
+    padding: 0 0 0 10px;
+}
+.dateTitle{
+    font-size: 13px;
+    color: orange;
+    margin: 20px 0 0 0;
+}
+.dateDesc{
+    font-size: 11px;
+    color: grey;
+}
+.dateSec{
+    width: 320px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+.dateInputOwn{
+    width: 75px;
+    margin: 0 20px 0 0;
+}
+.dateSelect{
+    width: 100px;
 }
