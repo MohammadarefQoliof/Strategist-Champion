@@ -22,6 +22,25 @@ if (pageNumber == 0) {
     tasksBar.append(targetLogo, topText, bottomText, btn)
 }else {
     btn = false
+    for(let i = 1; i<=Number(localStorage.getItem("pageNumber")); i++){
+        let card = document.createElement("div")
+        let tasksBar = document.querySelector(".tasksBar")
+        let leftSec = document.createElement("div")
+        let rightSec = document.createElement("div")
+        let logoDiv = document.createElement("div")
+        let logo = document.createElement("div")
+
+        card.classList.add("card")
+        leftSec.classList.add("leftSec")
+        rightSec.classList.add("rightSec")
+        logoDiv.classList.add("logoDiv")
+        logo.classList.add("logoImg")
+    
+        logoDiv.append(logo)
+        leftSec.append(logoDiv)
+        card.append(leftSec, rightSec)
+        tasksBar.append(card)
+    }
 }
 
 let newGoalBtn = document.querySelector(".hoverBtn")
@@ -50,11 +69,37 @@ cancel.addEventListener("click", ()=>{
 })
 save.addEventListener("click", ()=>{
     let pageNumber = Number(localStorage.getItem("pageNumber")) || 0
+    let modeValue = document.querySelector(".modeInput").value
+    let platformValue = document.querySelector(".platformInput").value
+    let startRatingValue = document.querySelector(".ratingInput").value
+    let dateNumValue = document.querySelector(".durationInput").value
+    let dateNameValue = document.querySelector(".dateInput").value
+    let checkTheBox = document.querySelector("#fide").checked
     pageNumber++
-    console.log(save)
     localStorage.setItem("pageNumber", pageNumber)
     localStorage.setItem(`title${pageNumber}`, goalTitle.value)
+    localStorage.setItem(`mode${pageNumber}`, modeValue)
+    localStorage.setItem(`platform${pageNumber}`, platformValue)
+    localStorage.setItem(`startRating${pageNumber}`, startRatingValue)
+    localStorage.setItem(`dateNum${pageNumber}`, dateNumValue)
+    localStorage.setItem(`dateName${pageNumber}`, dateNameValue)
+    localStorage.setItem(`checkBox${pageNumber}`, checkTheBox)
+    if(checkTheBox){
+        let fideRating = document.querySelector(".fideRatingInput").value
+        let dateInputOwn = document.querySelector(".dateInputOwn").value
+        let dateTime = document.querySelector(".dateSelect").value
+        
+        localStorage.setItem(`fideRating${pageNumber}`, fideRating)
+        localStorage.setItem(`fideDateNum${pageNumber}`, dateInputOwn)
+        localStorage.setItem(`fideDateName${pageNumber}`, dateTime)
+    }
+
     location.reload()
+})
+document.addEventListener("keydown", (e)=>{
+    if(e.key == "Enter"){
+        save.click()
+    }
 })
 
 let checkBox = document.querySelector("#fide")
@@ -84,6 +129,7 @@ checkBox.addEventListener("input", () => {
             dateTitle.textContent = "PRACTICE PHASE DURATION"
             dateDesc.textContent = "How long you will train on your platform before the competition"
             dateInput.type = "Number"
+            dateInput.value = "1"
             dateDay.value = "day"
             dateWeek.value = "week"
             dateMonth.value = "month"

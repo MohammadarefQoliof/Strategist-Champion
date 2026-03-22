@@ -42,13 +42,14 @@ body{
     justify-content: center;
 }
 .topSec{
-    width: 75%;
+    width: 55%;
     height: 80px;
     display: flex;
     align-items: center;
     padding: 20px 0 0 0;
+    margin: 10px 0;
     justify-content: space-between;
-    border-bottom: 1px solid rgb(30, 30, 30);
+    border-bottom: 5px solid rgb(30, 30, 30);
 }
 .main h1{
     font-family: "Playfair Display", serif;
@@ -304,4 +305,41 @@ body{
 }
 .dateSelect{
     width: 100px;
+}
+.card{
+    width: 55%;
+    height: 150px;
+    background-color: rgb(21, 21, 21);
+    margin: 30px 0;
+    border-radius: 15px;
+    display: flex;
+    transition: 0.6s;
+}
+.card:hover{
+    border: 1px solid orange;
+}
+.leftSec{
+    width: 50%;
+    height: auto;
+}
+.rightSec{
+    width: 50%;
+    height: auto;
+}
+.logoDiv{
+    width: 40px;
+    height: 40px;
+    border-radius: 15px;
+    background-color: rgb(31, 31, 31);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0 0 20px;
+}
+.logoImg{
+    width: 60%;
+    height: 60%;
+    background-image: url("../images/fire.png");
+    background-size: contain;
+    background-repeat: no-repeat;
 }
