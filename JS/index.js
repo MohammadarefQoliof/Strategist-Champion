@@ -2,7 +2,9 @@ let pageNumber = localStorage.getItem("pageNumber") || 0
 if(!pageNumber) {
     localStorage.setItem("pageNumber", 0)
 }
-let btn
+let usedPlans = document.querySelector(".usedPlans")
+usedPlans.textContent = `${pageNumber}/5 plans used`
+let btn;
 if (pageNumber == 0) {
     let targetLogo = document.createElement("div")
     let topText = document.createElement("h1")
@@ -28,16 +30,77 @@ if (pageNumber == 0) {
         let leftSec = document.createElement("div")
         let rightSec = document.createElement("div")
         let logoDiv = document.createElement("div")
-        let logo = document.createElement("div")
+        let logo = document.createElement("div") //flexible
+        let titleOfCard = document.createElement("h1")
+        let dateOfCard = document.createElement("div")
+        let ratingTextNum = document.createElement("div")
+        let ratingText = document.createElement("p")
+        let ratingNum = document.createElement("p")
+        let ratingChange = document.createElement("p")
+        let nextLogo = document.createElement("div")
+        let platformTitle = document.createElement("h1")
+        let timeLeft = document.createElement("div")
+        let time = document.createElement("p")
+        let timeText = document.createElement("p")
 
+        titleOfCard.textContent = localStorage.getItem(`title${i}`)
+        dateOfCard.textContent = `${localStorage.getItem(`dateNum${i}`)} ${localStorage.getItem(`dateName${i}`)}`
+        ratingText.textContent = "Rating"
+        ratingNum.textContent = localStorage.getItem(`startRating${i}`)
+        platformTitle.textContent = localStorage.getItem(`platform${i}`)
+        timeText.textContent = "Time Left"
+        
+        ratingText.classList.add("ratingText")
+        ratingNum.classList.add("ratingNum")
+        dateOfCard.classList.add("dateOfCard")
+        titleOfCard.classList.add("titleOfCard")
         card.classList.add("card")
         leftSec.classList.add("leftSec")
         rightSec.classList.add("rightSec")
         logoDiv.classList.add("logoDiv")
         logo.classList.add("logoImg")
-    
+        ratingChange.classList.add("ratingChange")
+        platformTitle.classList.add("platformTitle")
+        nextLogo.classList.add("nextLogo")
+        timeLeft.classList.add("timeLeft")
+        time.classList.add("time")
+        timeText.classList.add("timeText")
+
+        if(localStorage.getItem(`platform${i}`) == "CHESS.COM"){
+            platformTitle.style.width = "120px"
+        }
+        if(localStorage.getItem(`mode${i}`) == "self Improvement"){
+            logo.style.backgroundImage = `url("../images/fire.png")`
+        }else{
+            logo.style.backgroundImage = `url("../images/sword.png")`
+        }
+
+        function daysFromRealMonths(months) {
+            let today = new Date();
+            let targetDate = new Date(today.getFullYear(), today.getMonth() + months, today.getDate());
+
+            let diffMs = targetDate - today;
+
+            let diffDays = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+            
+            return diffDays;
+        }
+
+        if(localStorage.getItem(`dateName${i}`) == "days"){
+            time.textContent = `${localStorage.getItem(`dateNum${i}`)}d`
+        }else if(localStorage.getItem(`dateName${i}`) == "months"){
+            time.textContent = `${daysFromRealMonths(Number(localStorage.getItem(`dateNum${i}`)))}d`
+        }else{
+            time.textContent = `${Number(localStorage.getItem(`dateNum${i}`)) * 7}d`
+        }
+
+        timeLeft.append(timeText, time)
+        ratingNum.append(ratingChange)
+        ratingTextNum.append(ratingText, ratingNum)
+        platformTitle.append(nextLogo)
         logoDiv.append(logo)
-        leftSec.append(logoDiv)
+        leftSec.append(logoDiv, titleOfCard, dateOfCard, ratingTextNum)
+        rightSec.append(platformTitle, timeLeft)
         card.append(leftSec, rightSec)
         tasksBar.append(card)
     }
@@ -68,6 +131,12 @@ cancel.addEventListener("click", ()=>{
     }, {once: true})
 })
 save.addEventListener("click", ()=>{
+    let inputDuration = document.querySelector(".durationInput");
+    if (!inputDuration.checkValidity()) {
+        inputDuration.reportValidity();
+        return;
+    }
+
     let pageNumber = Number(localStorage.getItem("pageNumber")) || 0
     let modeValue = document.querySelector(".modeInput").value
     let platformValue = document.querySelector(".platformInput").value

@@ -308,12 +308,13 @@ body{
 }
 .card{
     width: 55%;
-    height: 150px;
+    height: 200px;
     background-color: rgb(21, 21, 21);
-    margin: 30px 0;
+    margin: 10px 0;
     border-radius: 15px;
     display: flex;
     transition: 0.6s;
+    cursor: pointer;
 }
 .card:hover{
     border: 1px solid orange;
@@ -321,10 +322,19 @@ body{
 .leftSec{
     width: 50%;
     height: auto;
+    padding: 10px 0 0 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 .rightSec{
     width: 50%;
     height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: space-between;
+    padding: 10px 10px 0 0;
 }
 .logoDiv{
     width: 40px;
@@ -334,12 +344,74 @@ body{
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 10px 0 0 20px;
 }
 .logoImg{
     width: 60%;
     height: 60%;
-    background-image: url("../images/fire.png");
     background-size: contain;
     background-repeat: no-repeat;
+}
+.titleOfCard{
+    font-size: 14px;
+    color: white;
+}
+.dateOfCard{
+    width: 100px;
+    height: 17px;
+    font-size: 13px;
+    padding: 0 0 0 21px;
+    background-image: url("../images/date.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+    color: grey;
+}
+.ratingText{
+    font-size: 15px;
+    color: grey;
+    margin: 15px 0 1px 0;
+}
+.ratingNum{
+    font-size: 25px;
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
+}
+.ratingChange{
+    font-size: 14px;
+}
+.platformTitle{
+    width: 90px;
+    height: 24px;
+    font-size: 15px;
+    color: grey;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.nextLogo{
+    width: 12px;
+    height: 12px;
+    background-image: url("../images/rightArrow.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+.timeLeft{
+    width: 120px;
+    height: 70px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin: 0 15px 0 0;
+}
+.time{
+    color: white;
+    font-size: 23px;
+    font-weight: 600;
+}
+.timeText{
+    color: grey;
+    font-weight: 400;
+    font-size: 13px;
 }

@@ -19,7 +19,7 @@
         <div class="topSec">
             <div>
                 <h1>Training Goals</h1>
-                <p>0/5 plans used</p>
+                <p class="usedPlans"></p>
             </div>
             <button class="btn hoverBtn"><span>+</span> New</button>
         </div>
@@ -43,11 +43,11 @@
                     </div>
                 </div>
                 <div class="platformSec">
-                    <h1 class="platformTitle">Training Platform</h1>
+                    <h1 class="titlePlatform">Training Platform</h1>
                     <div>
                         <select class="platformInput input">
-                            <option value="chess.com">Chess.com</option>
-                            <option value="lichess">Lichess</option>
+                            <option value="CHESS.COM">Chess.com</option>
+                            <option value="LICHESS">Lichess</option>
                         </select>
                     </div>
                 </div>
@@ -61,7 +61,7 @@
                     <h1 class="durationTitle">Duration</h1>
                     <div class="timeDate">
                         <div class="time">
-                            <input type="number" class="durationInput input" value="1">
+                            <input type="number" class="durationInput input" value="1" min="1" required>
                         </div>
                         <div class="date">
                             <select class="dateInput input">
