@@ -1,7 +1,5 @@
-let pageNumber = localStorage.getItem("pageNumber") || 0
-if(!pageNumber) {
-    localStorage.setItem("pageNumber", 0)
-}
+let pageNumber = Number(localStorage.getItem("pageNumber")) || 0;
+localStorage.setItem("pageNumber", pageNumber);
 let usedPlans = document.querySelector(".usedPlans")
 usedPlans.textContent = `${pageNumber}/5 plans used`
 let btn;
@@ -91,76 +89,82 @@ if (pageNumber == 0) {
             }
         }
 
-        function getDaysLeft(i, totalDays) {
-            let startDate = localStorage.getItem(`startDate${i}`);
-            if (!startDate) return totalDays;
+        
 
-            let start = new Date(startDate);
-            let now = new Date();
+        // function getDaysLeft(i, totalDays) {
+        //     let startDate = localStorage.getItem(`startDate${i}`);
+        //     if (!startDate) return totalDays;
 
-            let passedMs = now - start;
-            let passedDays = Math.floor(passedMs / (1000 * 60 * 60 * 24));
+        //     let start = new Date(startDate);
+        //     let now = new Date();
 
-            let leftDays = totalDays - passedDays;
+        //     let passedMs = now - start;
+        //     let passedDays = Math.floor(passedMs / (1000 * 60 * 60 * 24));
 
-            return leftDays > 0 ? leftDays : 0;
-        }
-        function daysFromRealMonths(months, startDateStr) {
-            let start = startDateStr ? new Date(startDateStr) : new Date();
-            let future = new Date(
-                start.getFullYear(),
-                start.getMonth() + months,
-                start.getDate()
-            );
+        //     let leftDays = totalDays - passedDays;
 
-            let diffMs = future - start;
-            return Math.ceil(diffMs / (1000 * 60 * 60 * 24));
-        }
+        //     return leftDays > 0 ? leftDays : 0;
+        // }
+        // function daysFromRealMonths(months, startDateStr) {
+        //     let start = startDateStr ? new Date(startDateStr) : new Date();
+        //     let future = new Date(
+        //         start.getFullYear(),
+        //         start.getMonth() + months,
+        //         start.getDate()
+        //     );
 
-        let totalDays;
+        //     let diffMs = future - start;
+        //     return Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+        // }
 
-        if(localStorage.getItem(`dateName${i}`) == "days"){
-            totalDays = Number(localStorage.getItem(`dateNum${i}`))
+        // let totalDays;
 
-            if (localStorage.getItem(`fideDateName${i}`) == "day"){
-                totalDays += Number(localStorage.getItem(`fideDateNum${i}`))
-            }else if(localStorage.getItem(`fideDateName${i}`) == "week"){
-                totalDays += Number(localStorage.getItem(`fideDateNum${i}`)) * 7
-            }else{
-                let startDate = localStorage.getItem(`startDate${i}`);
-                let fideNum = Number(localStorage.getItem(`fideDateNum${i}`))
-                totalDays += daysFromRealMonths(fideNum, startDate);
-            }
-            let daysLeft = getDaysLeft(i, totalDays);
-            time.textContent = `${daysLeft}d`;
-        }else if(localStorage.getItem(`dateName${i}`) == "months"){
-            let startDate = localStorage.getItem(`startDate${i}`);
-            totalDays = daysFromRealMonths(Number(localStorage.getItem(`dateNum${i}`)), startDate)
-            if (localStorage.getItem(`fideDateName${i}`) == "day"){
-                totalDays += Number(localStorage.getItem(`fideDateNum${i}`))
-            }else if(localStorage.getItem(`fideDateName${i}`) == "week"){
-                totalDays += Number(localStorage.getItem(`fideDateNum${i}`)) * 7
-            }else{
-                let startDate = localStorage.getItem(`startDate${i}`);
-                let fideNum = Number(localStorage.getItem(`fideDateNum${i}`))
-                totalDays += daysFromRealMonths(fideNum, startDate);
-            }
-            let daysLeft = getDaysLeft(i, totalDays);
-            time.textContent = `${daysLeft}d`;
-        }else{
-            totalDays = Number(localStorage.getItem(`dateNum${i}`)) * 7
-            if (localStorage.getItem(`fideDateName${i}`) == "day"){
-                totalDays += Number(localStorage.getItem(`fideDateNum${i}`))
-            }else if(localStorage.getItem(`fideDateName${i}`) == "week"){
-                totalDays += Number(localStorage.getItem(`fideDateNum${i}`)) * 7
-            }else{
-                let startDate = localStorage.getItem(`startDate${i}`);
-                let fideNum = Number(localStorage.getItem(`fideDateNum${i}`));
-                totalDays += daysFromRealMonths(fideNum, startDate);
-            }
-            let daysLeft = getDaysLeft(i, totalDays);
-            time.textContent = `${daysLeft}d`;
-        }
+        // if(localStorage.getItem(`dateName${i}`) == "days"){
+        //     totalDays = Number(localStorage.getItem(`dateNum${i}`))
+
+        //     if (localStorage.getItem(`fideDateName${i}`) == "day"){
+        //         totalDays += Number(localStorage.getItem(`fideDateNum${i}`))
+        //     }else if(localStorage.getItem(`fideDateName${i}`) == "week"){
+        //         totalDays += Number(localStorage.getItem(`fideDateNum${i}`)) * 7
+        //     }else{
+        //         let startDate = localStorage.getItem(`startDate${i}`);
+        //         let fideNum = Number(localStorage.getItem(`fideDateNum${i}`))
+        //         totalDays += daysFromRealMonths(fideNum, startDate);
+        //     }
+        //     let daysLeft = getDaysLeft(i, totalDays);
+        //     time.textContent = `${daysLeft}d`;
+        // }else if(localStorage.getItem(`dateName${i}`) == "months"){
+        //     let startDate = localStorage.getItem(`startDate${i}`);
+        //     totalDays = daysFromRealMonths(Number(localStorage.getItem(`dateNum${i}`)), startDate)
+        //     if (localStorage.getItem(`fideDateName${i}`) == "day"){
+        //         totalDays += Number(localStorage.getItem(`fideDateNum${i}`))
+        //     }else if(localStorage.getItem(`fideDateName${i}`) == "week"){
+        //         totalDays += Number(localStorage.getItem(`fideDateNum${i}`)) * 7
+        //     }else{
+        //         let startDate = localStorage.getItem(`startDate${i}`);
+        //         let fideNum = Number(localStorage.getItem(`fideDateNum${i}`))
+        //         totalDays += daysFromRealMonths(fideNum, startDate);
+        //     }
+        //     let daysLeft = getDaysLeft(i, totalDays);
+        //     time.textContent = `${daysLeft}d`;
+        // }else{
+        //     totalDays = Number(localStorage.getItem(`dateNum${i}`)) * 7
+        //     if (localStorage.getItem(`fideDateName${i}`) == "day"){
+        //         totalDays += Number(localStorage.getItem(`fideDateNum${i}`))
+        //     }else if(localStorage.getItem(`fideDateName${i}`) == "week"){
+        //         totalDays += Number(localStorage.getItem(`fideDateNum${i}`)) * 7
+        //     }else{
+        //         let startDate = localStorage.getItem(`startDate${i}`);
+        //         let fideNum = Number(localStorage.getItem(`fideDateNum${i}`));
+        //         totalDays += daysFromRealMonths(fideNum, startDate);
+        //     }
+        //     let daysLeft = getDaysLeft(i, totalDays);
+        //     time.textContent = `${daysLeft}d`;
+        // }
+
+        card.addEventListener("click", ()=>{
+            window.location.href = `HTML/sec${i}.html`
+        })
 
         timeLeft.append(timeText, time)
         ratingNum.append(ratingChange)
@@ -240,7 +244,7 @@ if(pageNumber >= 5){
         location.reload()
     })
     document.addEventListener("keydown", (e)=>{
-        if(e.key == "Enter"){
+        if(e.key == "Enter" && overlay.style.display === "flex"){
             save.click()
         }
     })

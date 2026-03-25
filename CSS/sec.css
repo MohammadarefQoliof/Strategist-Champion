@@ -1,0 +1,53 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    font-family: "DM Sans", sans-serif;
+}
+.top{
+    width: 100%;
+    height: 180px;
+    display: flex;
+    justify-content: space-between;
+    padding: 30px;
+    background-color: rgb(15, 15, 15);
+}
+.leftSec{
+    width: 50%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.modes{
+    display: flex;
+    gap: 10px;
+}
+.title{
+    font-family: "Playfair Display", serif;
+    color: white;
+}
+.platform1{
+    color: #D9A520;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 3px 10px;
+    background-color: #735814;
+    border-radius: 3px;
+}
+.platform3{
+    color: rgb(205, 205, 205);
+    font-size: 15px;
+    font-weight: 600;
+    padding: 3px 10px;
+    background-color: grey;
+    border-radius: 3px;
+}
+.dateTime{
+    color: white;
+}
