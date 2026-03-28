@@ -69,7 +69,7 @@ if (pageNumber == 0) {
         }
         
         let checkBox = localStorage.getItem(`checkBox${i}`)
-        console.log(checkBox);
+        // console.log(checkBox);
         
         if(checkBox == "true"){
             dateOfCard.textContent = `${localStorage.getItem(`dateNum${i}`)} ${localStorage.getItem(`dateName${i}`)} + ${localStorage.getItem(`fideDateNum${i}`)} ${localStorage.getItem(`fideDateName${i}`)} competition`
@@ -90,77 +90,33 @@ if (pageNumber == 0) {
         }
 
         
+        let daysList = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+        let monthsList = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 
-        // function getDaysLeft(i, totalDays) {
-        //     let startDate = localStorage.getItem(`startDate${i}`);
-        //     if (!startDate) return totalDays;
-
-        //     let start = new Date(startDate);
-        //     let now = new Date();
-
-        //     let passedMs = now - start;
-        //     let passedDays = Math.floor(passedMs / (1000 * 60 * 60 * 24));
-
-        //     let leftDays = totalDays - passedDays;
-
-        //     return leftDays > 0 ? leftDays : 0;
-        // }
-        // function daysFromRealMonths(months, startDateStr) {
-        //     let start = startDateStr ? new Date(startDateStr) : new Date();
-        //     let future = new Date(
-        //         start.getFullYear(),
-        //         start.getMonth() + months,
-        //         start.getDate()
-        //     );
-
-        //     let diffMs = future - start;
-        //     return Math.ceil(diffMs / (1000 * 60 * 60 * 24));
-        // }
-
-        // let totalDays;
-
-        // if(localStorage.getItem(`dateName${i}`) == "days"){
-        //     totalDays = Number(localStorage.getItem(`dateNum${i}`))
-
-        //     if (localStorage.getItem(`fideDateName${i}`) == "day"){
-        //         totalDays += Number(localStorage.getItem(`fideDateNum${i}`))
-        //     }else if(localStorage.getItem(`fideDateName${i}`) == "week"){
-        //         totalDays += Number(localStorage.getItem(`fideDateNum${i}`)) * 7
-        //     }else{
-        //         let startDate = localStorage.getItem(`startDate${i}`);
-        //         let fideNum = Number(localStorage.getItem(`fideDateNum${i}`))
-        //         totalDays += daysFromRealMonths(fideNum, startDate);
-        //     }
-        //     let daysLeft = getDaysLeft(i, totalDays);
-        //     time.textContent = `${daysLeft}d`;
-        // }else if(localStorage.getItem(`dateName${i}`) == "months"){
-        //     let startDate = localStorage.getItem(`startDate${i}`);
-        //     totalDays = daysFromRealMonths(Number(localStorage.getItem(`dateNum${i}`)), startDate)
-        //     if (localStorage.getItem(`fideDateName${i}`) == "day"){
-        //         totalDays += Number(localStorage.getItem(`fideDateNum${i}`))
-        //     }else if(localStorage.getItem(`fideDateName${i}`) == "week"){
-        //         totalDays += Number(localStorage.getItem(`fideDateNum${i}`)) * 7
-        //     }else{
-        //         let startDate = localStorage.getItem(`startDate${i}`);
-        //         let fideNum = Number(localStorage.getItem(`fideDateNum${i}`))
-        //         totalDays += daysFromRealMonths(fideNum, startDate);
-        //     }
-        //     let daysLeft = getDaysLeft(i, totalDays);
-        //     time.textContent = `${daysLeft}d`;
-        // }else{
-        //     totalDays = Number(localStorage.getItem(`dateNum${i}`)) * 7
-        //     if (localStorage.getItem(`fideDateName${i}`) == "day"){
-        //         totalDays += Number(localStorage.getItem(`fideDateNum${i}`))
-        //     }else if(localStorage.getItem(`fideDateName${i}`) == "week"){
-        //         totalDays += Number(localStorage.getItem(`fideDateNum${i}`)) * 7
-        //     }else{
-        //         let startDate = localStorage.getItem(`startDate${i}`);
-        //         let fideNum = Number(localStorage.getItem(`fideDateNum${i}`));
-        //         totalDays += daysFromRealMonths(fideNum, startDate);
-        //     }
-        //     let daysLeft = getDaysLeft(i, totalDays);
-        //     time.textContent = `${daysLeft}d`;
-        // }
+        let date = new Date().getMonth()
+        let currentDay = new Date().getDate()
+        let dateNum = Number(localStorage.getItem(`dateNum${i}`))
+        let dateName = localStorage.getItem(`dateName${i}`)
+        let startMonth = Number(localStorage.getItem(`startMonth${i}`))
+        let startDay = Number(localStorage.getItem(`startDay${i}`))
+        let leftDays = 0;
+        if (dateName == "days") {
+            leftDays = dateNum - (currentDay - startDay);
+        }else if (dateName == "weeks") {
+            leftDays = (dateNum * 7) - (currentDay - startDay);
+        }else if (dateName == "months") {
+            let totalDays = 0;
+            for (let j = 0; j < dateNum; j++) {
+                let monthIndex = (startMonth + j) % 12;
+                totalDays += daysList[monthIndex];
+            }
+            leftDays = totalDays - (currentDay - startDay);
+        }
+        if (leftDays <= 0) {
+            time.textContent = `0d`;
+        } else {
+            time.textContent = `${leftDays}d`;
+        }
 
         card.addEventListener("click", ()=>{
             window.location.href = `HTML/sec${i}.html`
@@ -230,7 +186,8 @@ if(pageNumber >= 5){
         localStorage.setItem(`dateNum${pageNumber}`, dateNumValue)
         localStorage.setItem(`dateName${pageNumber}`, dateNameValue)
         localStorage.setItem(`checkBox${pageNumber}`, checkTheBox)
-        localStorage.setItem(`startDate${pageNumber}`, new Date().toISOString());
+        localStorage.setItem(`startMonth${pageNumber}`, new Date().getMonth());
+        localStorage.setItem(`startDay${pageNumber}`, new Date().getDate());
         if(checkTheBox){
             let fideRating = document.querySelector(".fideRatingInput").value
             let dateInputOwn = document.querySelector(".dateInputOwn").value
