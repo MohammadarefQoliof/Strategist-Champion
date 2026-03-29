@@ -63,13 +63,12 @@ if (pageNumber == 0) {
         timeText.classList.add("timeText")
         
         if(localStorage.getItem(`mode${i}`) == "self Improvement"){
-            logo.style.backgroundImage = `url("../images/fire.png")`
+            logo.style.backgroundImage = `url("../assets/fire.png")`
         }else{
-            logo.style.backgroundImage = `url("../images/sword.png")`
+            logo.style.backgroundImage = `url("../assets/sword.png")`
         }
         
         let checkBox = localStorage.getItem(`checkBox${i}`)
-        // console.log(checkBox);
         
         if(checkBox == "true"){
             dateOfCard.textContent = `${localStorage.getItem(`dateNum${i}`)} ${localStorage.getItem(`dateName${i}`)} + ${localStorage.getItem(`fideDateNum${i}`)} ${localStorage.getItem(`fideDateName${i}`)} competition`
@@ -91,7 +90,6 @@ if (pageNumber == 0) {
 
         
         let daysList = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
-        let monthsList = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
 
         let date = new Date().getMonth()
         let currentDay = new Date().getDate()
