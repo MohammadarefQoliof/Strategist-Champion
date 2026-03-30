@@ -110,6 +110,7 @@ if (pageNumber == 0) {
             }
             leftDays = totalDays - (currentDay - startDay);
         }
+        localStorage.setItem(`remainingDays${i}`, leftDays);
         if (leftDays <= 0) {
             time.textContent = `0d`;
         } else {

@@ -17,15 +17,15 @@
     <div class="top">
         <div class="leftSec">
             <div class="modes">
-                <p class="platform1">CHESS.COM</p>
+                <p class="platform1"></p>
                 <p class="platform2"></p>
-                <p class="platform3">IMPROVEMENT</p>
+                <p class="platform3"></p>
             </div>
-            <h1 class="title">Self Improvement</h1>
-            <p class="dateTime">Mar 25, 2026 — Apr 25, 2026</p>
+            <h1 class="title"></h1>
+            <p class="dateTime"></p>
         </div>
         <div class="rightSec">
-            <button><span>+</span>&nbsp; Log Rating</button>
+            <button class="Btn"><span>+</span>&nbsp; Log Rating</button>
             <div class="bgBin">
                 <div class="bin"></div>
             </div>
@@ -40,11 +40,11 @@
         <div class="ratingAndDuration">
             <div class="ratingSec">
                 <p>Current Rating</p>
-                <h3>1500</h3>
+                <h3 class="currentRating"></h3>
             </div>
             <div class="durationSec">
                 <p>Days Left</p>
-                <h3>30</h3>
+                <h3 class="remainingDays"></h3>
             </div>
         </div>
     
@@ -64,6 +64,21 @@
 
     </div>
 
+    <div class="overlay">
+        <div class="inputCard">
+            <h1 class="title">Log New Rating</h1>
+            <p class="describe">Recording a Chess.com practice rating</p>
+            <div class="ratingSection">
+                <p class="newRatingText">New Rating</p>
+                <input type="number" class="ratingValue">
+            </div>
+            <hr>
+            <div class="buttons">
+                <button class="cancel">Cancel</button>
+                <button class="Btn save">Save Entry</button>
+            </div>
+        </div>
+    </div>
     
     <script src="../JS/sec1.js"></script>
 </body>
