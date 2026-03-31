@@ -226,10 +226,12 @@ body{
     padding: 0 0 0 140px;
     color: white;
 }
-.ratingHistory p{
-    font-family: "Playfair Display", serif;
+.ratingHistory{
     font-size: 17px;
     color: grey;
+}
+.ratingHis{
+    font-family: "Playfair Display", serif;
 }
 .ratingHistorySec{
     width: 90%;
@@ -238,6 +240,9 @@ body{
     background-color: rgb(18, 18, 18);
     border: 2px solid rgb(30, 30, 30);
     border-radius: 22px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .overlay{
     width: 100%;
@@ -324,4 +329,64 @@ hr{
         transform: scale(0.9);
         opacity: 0;
     }
+}
+.ratingTopTexts{
+    width: 89%;
+    font-size: 17px;
+    font-weight: 600;
+    color: grey;
+    margin: 20px 0 0 40px;
+    display: flex;
+    justify-content: space-between;
+}
+.ratingOverlay{
+    width: 90%;
+    height: 35px;
+    background-color: rgb(30, 30, 30);
+    border-radius: 15px;
+    margin: 20px 0 0 3%;
+}
+.texts{
+    width: 90%;
+    height: 20px;
+    font-size: 15px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: grey;
+    margin: 10px 0 0 3%;
+}
+.num{
+    color: white;
+}
+.onOverlay{
+    height: 100%;
+    border-radius: 15px;
+}
+.ratingOnOverlay{
+    width: 3%;
+    background-color: green;
+}
+.timeOnOverlay{
+    width: 3%;
+    background-color: rgba(214, 161, 25, 1);
+}
+.img{
+    width: 24px;
+    height: 24px;
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+.differenceText{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.increase{
+    font-size: 17px;
+    color: lightGreen;
+}
+.decrease{
+    font-size: 17px;
+    color: red;
 }

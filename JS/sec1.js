@@ -21,6 +21,10 @@ bin.addEventListener("click", () => {
         "startDay",
         "startMonth",
         "startRating",
+        "currentRating",
+        "passedDays",
+        "ratingDifference",
+        "remainingDays",
         "title"
     ];
 
@@ -94,7 +98,7 @@ logRatingBtn.addEventListener("click", ()=>{
 })
 
 let newRatingInput = document.querySelector(".ratingValue");
-newRatingInput.value = localStorage.getItem("startRating1");
+newRatingInput.value = localStorage.getItem("currentRating1");
 
 let cancelBtn = document.querySelector(".cancel");
 let saveBtn = document.querySelector(".save");
@@ -111,10 +115,57 @@ cancelBtn.addEventListener("click", ()=>{
 
 // })
 
-
-
-
-let currentRating = document.querySelector(".currentRating");
 let remainingDays = document.querySelector(".remainingDays");
-currentRating.textContent = localStorage.getItem("startRating1");
 remainingDays.textContent = localStorage.getItem("remainingDays1");
+
+let startRating = document.querySelector(".startRating");
+let currentRatingText = document.querySelector(".currentRatingText");
+startRating.innerHTML = `Start: <span class="num">${localStorage.getItem("startRating1")}</span>`;
+currentRatingText.innerHTML = `Current: <span class="num">${localStorage.getItem("currentRating1")}</span>`;
+let ratingDifference = Number(localStorage.getItem("currentRating1")) - Number(localStorage.getItem("startRating1"));
+localStorage.setItem("ratingDifference1", ratingDifference);
+
+let ratingDifferenceText = document.querySelector(".differenceText");
+let ratingOnOverlay = document.querySelector(".ratingOnOverlay");
+if (ratingDifference > 0){
+
+    let currentRating = document.querySelector(".currentRating");
+    currentRating.innerHTML = `${localStorage.getItem("currentRating1")} <span class="increase">+${ratingDifference}</span>`;
+    
+    ratingDifferenceText.style.color = "lightGreen";
+    ratingOnOverlay.style.width = "100%"
+    ratingDifferenceText.innerHTML = `<div class="img"></div>+${ratingDifference} pts`
+    
+    let image = document.querySelector(".img");
+    image.style.backgroundImage = `url("../assets/increase.png")`;
+}else if(ratingDifference < 0){
+
+    let currentRating = document.querySelector(".currentRating");
+    currentRating.innerHTML = `${localStorage.getItem("currentRating1")} <span class="decrease">${ratingDifference}</span>`;
+    
+    ratingDifferenceText.style.color = "red";
+    ratingOnOverlay.style.width = "100%"
+    ratingOnOverlay.style.backgroundColor = "red";
+    ratingDifferenceText.innerHTML = `<div class="img"></div>${ratingDifference} pts`
+    
+    let image = document.querySelector(".img");
+    image.style.backgroundImage = `url("../assets/decrease.png")`;
+}else{
+    let currentRating = document.querySelector(".currentRating");
+    currentRating.innerHTML = `${localStorage.getItem("currentRating1")}`;
+    ratingDifferenceText.textContent = "— 0 pts"
+}
+
+let startDate = document.querySelector(".startDate");
+let lastDate = document.querySelector(".lastDate");
+startDate.textContent = `${monthOfYear[currentMonth]} ${currentDay}, ${realCurrentYear}`;
+lastDate.textContent = `${monthOfYear[nowMonth]} ${nowDay}, ${currentYear}`;
+
+let leftDays = Number(localStorage.getItem("remainingDays1"));
+let passedDays = Number(localStorage.getItem("passedDays1"));
+let timeOnOverlay = document.querySelector(".timeOnOverlay");
+let total = passedDays + leftDays;
+let percentage = total == 0 ? 0 : (passedDays / total) * 100;
+let percentageText = document.querySelector(".percentageText");
+percentageText.textContent = `${Math.round(percentage)}% complete`;
+timeOnOverlay.style.width = `${percentage}%`

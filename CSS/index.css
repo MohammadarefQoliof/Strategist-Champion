@@ -421,3 +421,11 @@ body{
 .spanFide{
     color: orange;
 }
+.increase{
+    font-size: 17px;
+    color: lightGreen;
+}
+.decrease{
+    font-size: 17px;
+    color: red;
+}

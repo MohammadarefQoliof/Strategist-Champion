@@ -43,7 +43,14 @@ if (pageNumber == 0) {
 
         titleOfCard.textContent = localStorage.getItem(`title${i}`)
         ratingText.textContent = "Rating"
-        ratingNum.textContent = localStorage.getItem(`startRating${i}`)
+        let ratingDifference = localStorage.getItem(`ratingDifference${i}`)
+        if (ratingDifference > 0){
+            ratingNum.innerHTML = `${localStorage.getItem("currentRating1")} <span class="increase">+${ratingDifference}</span>`;
+        }else if (ratingDifference < 0){
+            ratingNum.innerHTML = `${localStorage.getItem("currentRating1")} <span class="decrease">${ratingDifference}</span>`;
+        }else{
+            ratingNum.textContent = localStorage.getItem("currentRating1");
+        }
         timeText.textContent = "Time Left"
         
         ratingText.classList.add("ratingText")
@@ -91,26 +98,45 @@ if (pageNumber == 0) {
         
         let daysList = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
-        let date = new Date().getMonth()
         let currentDay = new Date().getDate()
+        let currentMonth = new Date().getMonth()
+
         let dateNum = Number(localStorage.getItem(`dateNum${i}`))
         let dateName = localStorage.getItem(`dateName${i}`)
         let startMonth = Number(localStorage.getItem(`startMonth${i}`))
         let startDay = Number(localStorage.getItem(`startDay${i}`))
-        let leftDays = 0;
+        
+        let totalDays = 0;
         if (dateName == "days") {
-            leftDays = dateNum - (currentDay - startDay);
+            totalDays = dateNum;
         }else if (dateName == "weeks") {
-            leftDays = (dateNum * 7) - (currentDay - startDay);
+            totalDays = dateNum * 7;
         }else if (dateName == "months") {
-            let totalDays = 0;
             for (let j = 0; j < dateNum; j++) {
                 let monthIndex = (startMonth + j) % 12;
                 totalDays += daysList[monthIndex];
             }
-            leftDays = totalDays - (currentDay - startDay);
         }
+        let passedDays = 0;
+
+        let tempMonth = startMonth;
+        let tempDay = startDay;
+
+        while (tempMonth !== currentMonth || tempDay !== currentDay) {
+            passedDays++;
+
+            tempDay++;
+
+            if (tempDay > daysList[tempMonth]) {
+                tempDay = 1;
+                tempMonth = (tempMonth + 1) % 12;
+            }
+        }
+
+        let leftDays = totalDays - passedDays;
         localStorage.setItem(`remainingDays${i}`, leftDays);
+        localStorage.setItem(`passedDays${i}`, passedDays);
+        
         if (leftDays <= 0) {
             time.textContent = `0d`;
         } else {
@@ -181,6 +207,7 @@ if(pageNumber >= 5){
         localStorage.setItem(`title${pageNumber}`, goalTitle.value)
         localStorage.setItem(`mode${pageNumber}`, modeValue)
         localStorage.setItem(`platform${pageNumber}`, platformValue)
+        localStorage.setItem(`currentRating${pageNumber}`, startRatingValue)
         localStorage.setItem(`startRating${pageNumber}`, startRatingValue)
         localStorage.setItem(`dateNum${pageNumber}`, dateNumValue)
         localStorage.setItem(`dateName${pageNumber}`, dateNameValue)
