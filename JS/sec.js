@@ -1,9 +1,10 @@
+let currentPage = localStorage.getItem("currentPage")
 let platform1 = document.querySelector(".platform1")
-platform1.textContent = localStorage.getItem("platform1")
+platform1.textContent = localStorage.getItem(`platform${currentPage}`)
 let title = document.querySelector(".title")
-title.textContent = localStorage.getItem("title1")
+title.textContent = localStorage.getItem(`chesstitle${currentPage}`)
 let mode1 = document.querySelector(".platform3")
-if (localStorage.getItem("mode1") == "self Improvement"){
+if (localStorage.getItem(`mode${currentPage}`) == "self Improvement"){
     mode1.textContent = "IMPROVEMENT"
 }else{
     mode1.textContent = "COMPETITION"
@@ -25,10 +26,11 @@ bin.addEventListener("click", () => {
         "passedDays",
         "ratingDifference",
         "remainingDays",
-        "title"
+        "chesstitle",
+        "ratingHistory"
     ];
 
-    let maxItems = 5
+    let maxItems = Number(localStorage.getItem("currentPage")) + 1;
     let pageNum = localStorage.getItem("pageNumber");
     pageNum--;
     localStorage.setItem("pageNumber", pageNum);
@@ -58,8 +60,8 @@ let monthDays = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31];
 
 let dateTime = document.querySelector(".dateTime");
 
-let dateName = localStorage.getItem("dateName1");
-let dateNum = Number(localStorage.getItem("dateNum1"));
+let dateName = localStorage.getItem(`dateName${currentPage}`);
+let dateNum = Number(localStorage.getItem(`dateNum${currentPage}`));
 
 let currentMonth = new Date().getMonth();
 let currentDay = new Date().getDate();
@@ -97,12 +99,15 @@ logRatingBtn.addEventListener("click", ()=>{
     overlay.style.display = "flex";
 })
 
+
+
 let newRatingInput = document.querySelector(".ratingValue");
-newRatingInput.value = localStorage.getItem("currentRating1");
+newRatingInput.value = localStorage.getItem(`currentRating${currentPage}`);
 
 let cancelBtn = document.querySelector(".cancel");
 let saveBtn = document.querySelector(".save");
 let inputDiv = document.querySelector(".inputCard");
+let ratingHistory = document.querySelector(".ratingHistorySec");
 cancelBtn.addEventListener("click", ()=>{
     inputDiv.classList.add("animate")
     inputDiv.addEventListener("animationend", ()=>{
@@ -111,26 +116,46 @@ cancelBtn.addEventListener("click", ()=>{
     }, {once: true})
 })
 
-// saveBtn.addEventListener("click", ()=>{
+let logHistory = JSON.parse(localStorage.getItem(`ratingHistory${currentPage}`)) || [];
+saveBtn.addEventListener("click", ()=>{
+    let newRating = newRatingInput.value;
+    localStorage.setItem(`currentRating${currentPage}`, newRating);
+    let currentFullDate = `${monthOfYear[new Date().getMonth()]} ${new Date().getDate()}, ${new Date().getFullYear()}`
+    if(new Date().getMinutes() < 10){
+        currentTime = `${new Date().getHours()}:0${new Date().getMinutes()}`;
+    }else{
+        let currentTime = `${new Date().getHours()}:${new Date().getMinutes()}`;
+    }
+    logHistory.push({
+        rating: newRating,
+        ratingDifference: localStorage.getItem(`ratingDifference${currentPage}`),
+        platform: localStorage.getItem(`platform${currentPage}`),
+        date: currentFullDate,
+        time: currentTime
+    })
+    localStorage.setItem(`ratingHistory${currentPage}`, JSON.stringify(logHistory));
+    location.reload();
+})
 
-// })
+
+
 
 let remainingDays = document.querySelector(".remainingDays");
-remainingDays.textContent = localStorage.getItem("remainingDays1");
+remainingDays.textContent = localStorage.getItem(`remainingDays${currentPage}`);
 
 let startRating = document.querySelector(".startRating");
 let currentRatingText = document.querySelector(".currentRatingText");
-startRating.innerHTML = `Start: <span class="num">${localStorage.getItem("startRating1")}</span>`;
-currentRatingText.innerHTML = `Current: <span class="num">${localStorage.getItem("currentRating1")}</span>`;
-let ratingDifference = Number(localStorage.getItem("currentRating1")) - Number(localStorage.getItem("startRating1"));
-localStorage.setItem("ratingDifference1", ratingDifference);
+startRating.innerHTML = `Start: <span class="num">${localStorage.getItem(`startRating${currentPage}`)}</span>`;
+currentRatingText.innerHTML = `Current: <span class="num">${localStorage.getItem(`currentRating${currentPage}`)}</span>`;
+let ratingDifference = Number(localStorage.getItem(`currentRating${currentPage}`)) - Number(localStorage.getItem(`startRating${currentPage}`));
+localStorage.setItem(`ratingDifference${currentPage}`, ratingDifference);
 
 let ratingDifferenceText = document.querySelector(".differenceText");
 let ratingOnOverlay = document.querySelector(".ratingOnOverlay");
 if (ratingDifference > 0){
 
     let currentRating = document.querySelector(".currentRating");
-    currentRating.innerHTML = `${localStorage.getItem("currentRating1")} <span class="increase">+${ratingDifference}</span>`;
+    currentRating.innerHTML = `${localStorage.getItem(`currentRating${currentPage}`)} <span class="increase">+${ratingDifference}</span>`;
     
     ratingDifferenceText.style.color = "lightGreen";
     ratingOnOverlay.style.width = "100%"
@@ -141,7 +166,7 @@ if (ratingDifference > 0){
 }else if(ratingDifference < 0){
 
     let currentRating = document.querySelector(".currentRating");
-    currentRating.innerHTML = `${localStorage.getItem("currentRating1")} <span class="decrease">${ratingDifference}</span>`;
+    currentRating.innerHTML = `${localStorage.getItem(`currentRating${currentPage}`)} <span class="decrease">${ratingDifference}</span>`;
     
     ratingDifferenceText.style.color = "red";
     ratingOnOverlay.style.width = "100%"
@@ -152,7 +177,7 @@ if (ratingDifference > 0){
     image.style.backgroundImage = `url("../assets/decrease.png")`;
 }else{
     let currentRating = document.querySelector(".currentRating");
-    currentRating.innerHTML = `${localStorage.getItem("currentRating1")}`;
+    currentRating.innerHTML = `${localStorage.getItem(`currentRating${currentPage}`)}`;
     ratingDifferenceText.textContent = "— 0 pts"
 }
 
@@ -161,8 +186,8 @@ let lastDate = document.querySelector(".lastDate");
 startDate.textContent = `${monthOfYear[currentMonth]} ${currentDay}, ${realCurrentYear}`;
 lastDate.textContent = `${monthOfYear[nowMonth]} ${nowDay}, ${currentYear}`;
 
-let leftDays = Number(localStorage.getItem("remainingDays1"));
-let passedDays = Number(localStorage.getItem("passedDays1"));
+let leftDays = Number(localStorage.getItem(`remainingDays${currentPage}`));
+let passedDays = Number(localStorage.getItem(`passedDays${currentPage}`));
 let timeOnOverlay = document.querySelector(".timeOnOverlay");
 let total = passedDays + leftDays;
 let percentage = total == 0 ? 0 : (passedDays / total) * 100;

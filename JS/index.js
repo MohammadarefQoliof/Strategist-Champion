@@ -1,7 +1,5 @@
 let pageNumber = Number(localStorage.getItem("pageNumber")) || 0;
 localStorage.setItem("pageNumber", pageNumber);
-let usedPlans = document.querySelector(".usedPlans")
-usedPlans.textContent = `${pageNumber}/5 plans used`
 let btn;
 if (pageNumber == 0) {
     let targetLogo = document.createElement("div")
@@ -41,15 +39,15 @@ if (pageNumber == 0) {
         let time = document.createElement("p")
         let timeText = document.createElement("p")
 
-        titleOfCard.textContent = localStorage.getItem(`title${i}`)
+        titleOfCard.textContent = localStorage.getItem(`chesstitle${i}`)
         ratingText.textContent = "Rating"
         let ratingDifference = localStorage.getItem(`ratingDifference${i}`)
         if (ratingDifference > 0){
-            ratingNum.innerHTML = `${localStorage.getItem("currentRating1")} <span class="increase">+${ratingDifference}</span>`;
+            ratingNum.innerHTML = `${localStorage.getItem(`currentRating${i}`)} <span class="increase">+${ratingDifference}</span>`;
         }else if (ratingDifference < 0){
-            ratingNum.innerHTML = `${localStorage.getItem("currentRating1")} <span class="decrease">${ratingDifference}</span>`;
+            ratingNum.innerHTML = `${localStorage.getItem(`currentRating${i}`)} <span class="decrease">${ratingDifference}</span>`;
         }else{
-            ratingNum.textContent = localStorage.getItem("currentRating1");
+            ratingNum.textContent = localStorage.getItem(`currentRating${i}`);
         }
         timeText.textContent = "Time Left"
         
@@ -144,7 +142,8 @@ if (pageNumber == 0) {
         }
 
         card.addEventListener("click", ()=>{
-            window.location.href = `HTML/sec${i}.html`
+            localStorage.setItem("currentPage", i);
+            window.location.href = `HTML/sec.html`
         })
 
         timeLeft.append(timeText, time)
@@ -159,136 +158,130 @@ if (pageNumber == 0) {
     }
 }
 
-let hoverBtnMax5 = document.querySelector(".hoverBtn")
-if(pageNumber >= 5){
-    hoverBtnMax5.classList.add("maxPlan")
-}else{
-    hoverBtnMax5.classList.remove("maxPlan")
-    let newGoalBtn = document.querySelector(".hoverBtn")
-    let overlay = document.querySelector(".overlay")
-    
-    newGoalBtn.addEventListener("click", ()=>{
+let newGoalBtn = document.querySelector(".hoverBtn")
+let overlay = document.querySelector(".overlay")
+
+newGoalBtn.addEventListener("click", ()=>{
+    overlay.style.display = "flex"
+})
+if(btn){
+    btn.addEventListener("click", ()=>{
         overlay.style.display = "flex"
     })
-    if(btn){
-        btn.addEventListener("click", ()=>{
-            overlay.style.display = "flex"
-        })
+}
+
+let cancel = document.querySelector(".cancelBtn")
+let save = document.querySelector(".saveBtn")
+let inputDiv = document.querySelector(".inputCard")
+let goalTitle = document.querySelector(".goalInput")
+
+cancel.addEventListener("click", ()=>{
+    inputDiv.classList.add("animate")
+    inputDiv.addEventListener("animationend", ()=>{
+        overlay.style.display = "none"
+        inputDiv.classList.remove("animate")
+    }, {once: true})
+})
+save.addEventListener("click", ()=>{
+    let inputDuration = document.querySelector(".durationInput");
+    if (!inputDuration.checkValidity()) {
+        inputDuration.reportValidity();
+        return;
     }
     
-    let cancel = document.querySelector(".cancelBtn")
-    let save = document.querySelector(".saveBtn")
-    let inputDiv = document.querySelector(".inputCard")
-    let goalTitle = document.querySelector(".goalInput")
-    
-    cancel.addEventListener("click", ()=>{
-        inputDiv.classList.add("animate")
-        inputDiv.addEventListener("animationend", ()=>{
-            overlay.style.display = "none"
-            inputDiv.classList.remove("animate")
-        }, {once: true})
-    })
-    save.addEventListener("click", ()=>{
-        let inputDuration = document.querySelector(".durationInput");
-        if (!inputDuration.checkValidity()) {
-            inputDuration.reportValidity();
-            return;
-        }
+    let pageNumber = Number(localStorage.getItem("pageNumber")) || 0
+    let modeValue = document.querySelector(".modeInput").value
+    let platformValue = document.querySelector(".platformInput").value
+    let startRatingValue = document.querySelector(".ratingInput").value
+    let dateNumValue = document.querySelector(".durationInput").value
+    let dateNameValue = document.querySelector(".dateInput").value
+    let checkTheBox = document.querySelector("#fide").checked
+    pageNumber++
+    localStorage.setItem("pageNumber", pageNumber)
+    localStorage.setItem(`chesstitle${pageNumber}`, goalTitle.value)
+    localStorage.setItem(`mode${pageNumber}`, modeValue)
+    localStorage.setItem(`platform${pageNumber}`, platformValue)
+    localStorage.setItem(`currentRating${pageNumber}`, startRatingValue)
+    localStorage.setItem(`startRating${pageNumber}`, startRatingValue)
+    localStorage.setItem(`dateNum${pageNumber}`, dateNumValue)
+    localStorage.setItem(`dateName${pageNumber}`, dateNameValue)
+    localStorage.setItem(`checkBox${pageNumber}`, checkTheBox)
+    localStorage.setItem(`startMonth${pageNumber}`, new Date().getMonth());
+    localStorage.setItem(`startDay${pageNumber}`, new Date().getDate());
+    if(checkTheBox){
+        let fideRating = document.querySelector(".fideRatingInput").value
+        let dateInputOwn = document.querySelector(".dateInputOwn").value
+        let dateTime = document.querySelector(".dateSelect").value
         
-        let pageNumber = Number(localStorage.getItem("pageNumber")) || 0
-        let modeValue = document.querySelector(".modeInput").value
-        let platformValue = document.querySelector(".platformInput").value
-        let startRatingValue = document.querySelector(".ratingInput").value
-        let dateNumValue = document.querySelector(".durationInput").value
-        let dateNameValue = document.querySelector(".dateInput").value
-        let checkTheBox = document.querySelector("#fide").checked
-        pageNumber++
-        localStorage.setItem("pageNumber", pageNumber)
-        localStorage.setItem(`title${pageNumber}`, goalTitle.value)
-        localStorage.setItem(`mode${pageNumber}`, modeValue)
-        localStorage.setItem(`platform${pageNumber}`, platformValue)
-        localStorage.setItem(`currentRating${pageNumber}`, startRatingValue)
-        localStorage.setItem(`startRating${pageNumber}`, startRatingValue)
-        localStorage.setItem(`dateNum${pageNumber}`, dateNumValue)
-        localStorage.setItem(`dateName${pageNumber}`, dateNameValue)
-        localStorage.setItem(`checkBox${pageNumber}`, checkTheBox)
-        localStorage.setItem(`startMonth${pageNumber}`, new Date().getMonth());
-        localStorage.setItem(`startDay${pageNumber}`, new Date().getDate());
-        if(checkTheBox){
-            let fideRating = document.querySelector(".fideRatingInput").value
-            let dateInputOwn = document.querySelector(".dateInputOwn").value
-            let dateTime = document.querySelector(".dateSelect").value
-            
-            localStorage.setItem(`fideRating${pageNumber}`, fideRating)
-            localStorage.setItem(`fideDateNum${pageNumber}`, dateInputOwn)
-            localStorage.setItem(`fideDateName${pageNumber}`, dateTime)
+        localStorage.setItem(`fideRating${pageNumber}`, fideRating)
+        localStorage.setItem(`fideDateNum${pageNumber}`, dateInputOwn)
+        localStorage.setItem(`fideDateName${pageNumber}`, dateTime)
+    }
+
+    location.reload()
+})
+document.addEventListener("keydown", (e)=>{
+    if(e.key == "Enter" && overlay.style.display === "flex"){
+        save.click()
+    }
+})
+
+let checkBox = document.querySelector("#fide")
+let fideBox = document.querySelector(".checkFide")
+
+let fideInputSpace = false
+
+checkBox.addEventListener("input", () => {
+    if (checkBox.checked) {
+        if (!fideInputSpace) {
+            let inputTitle = document.createElement("h1")
+            let ratingInput = document.createElement("input")
+            let dateSec = document.createElement("div")
+            let dateTitle = document.createElement("h1")
+            let dateDesc = document.createElement("p")
+            let dateInput = document.createElement("input")
+            let selectOption = document.createElement("div")
+            let dateSelect = document.createElement("select")
+            let dateDay = document.createElement("option")
+            let dateWeek = document.createElement("option")
+            let dateMonth = document.createElement("option")
+            fideInputSpace = document.createElement("div")
+
+            ratingInput.type = "number"
+            ratingInput.placeholder = "e.g. 1450"
+
+            dateTitle.textContent = "PRACTICE PHASE DURATION"
+            dateDesc.textContent = "How long you will train on your platform before the competition"
+            dateInput.type = "Number"
+            dateInput.value = "1"
+            dateDay.value = "day"
+            dateWeek.value = "week"
+            dateMonth.value = "month"
+            dateDay.textContent = "Day"
+            dateWeek.textContent = "Week"
+            dateMonth.textContent = "Month"
+
+            inputTitle.textContent = "Current FIDE Rating"
+
+            ratingInput.classList.add("input", "fideRatingInput")
+            inputTitle.classList.add("inputTitle")
+            fideInputSpace.classList.add("fideInputSpace")
+            dateTitle.classList.add("dateTitle")
+            dateDesc.classList.add("dateDesc")
+            dateSec.classList.add("dateSec")
+            dateInput.classList.add("input", "dateInputOwn")
+            dateSelect.classList.add("dateSelect", "input")
+
+            dateSelect.append(dateDay, dateWeek, dateMonth)
+            selectOption.append(dateInput, dateSelect)
+            dateSec.append(dateTitle, dateDesc, selectOption)
+            fideInputSpace.append(inputTitle, ratingInput, dateSec)
+            fideBox.append(fideInputSpace)
         }
-    
-        location.reload()
-    })
-    document.addEventListener("keydown", (e)=>{
-        if(e.key == "Enter" && overlay.style.display === "flex"){
-            save.click()
+    }else {
+        if (fideInputSpace) {
+            fideInputSpace.remove()
+            fideInputSpace = false
         }
-    })
-    
-    let checkBox = document.querySelector("#fide")
-    let fideBox = document.querySelector(".checkFide")
-    
-    let fideInputSpace = false
-    
-    checkBox.addEventListener("input", () => {
-        if (checkBox.checked) {
-            if (!fideInputSpace) {
-                let inputTitle = document.createElement("h1")
-                let ratingInput = document.createElement("input")
-                let dateSec = document.createElement("div")
-                let dateTitle = document.createElement("h1")
-                let dateDesc = document.createElement("p")
-                let dateInput = document.createElement("input")
-                let selectOption = document.createElement("div")
-                let dateSelect = document.createElement("select")
-                let dateDay = document.createElement("option")
-                let dateWeek = document.createElement("option")
-                let dateMonth = document.createElement("option")
-                fideInputSpace = document.createElement("div")
-    
-                ratingInput.type = "number"
-                ratingInput.placeholder = "e.g. 1450"
-    
-                dateTitle.textContent = "PRACTICE PHASE DURATION"
-                dateDesc.textContent = "How long you will train on your platform before the competition"
-                dateInput.type = "Number"
-                dateInput.value = "1"
-                dateDay.value = "day"
-                dateWeek.value = "week"
-                dateMonth.value = "month"
-                dateDay.textContent = "Day"
-                dateWeek.textContent = "Week"
-                dateMonth.textContent = "Month"
-    
-                inputTitle.textContent = "Current FIDE Rating"
-    
-                ratingInput.classList.add("input", "fideRatingInput")
-                inputTitle.classList.add("inputTitle")
-                fideInputSpace.classList.add("fideInputSpace")
-                dateTitle.classList.add("dateTitle")
-                dateDesc.classList.add("dateDesc")
-                dateSec.classList.add("dateSec")
-                dateInput.classList.add("input", "dateInputOwn")
-                dateSelect.classList.add("dateSelect", "input")
-    
-                dateSelect.append(dateDay, dateWeek, dateMonth)
-                selectOption.append(dateInput, dateSelect)
-                dateSec.append(dateTitle, dateDesc, selectOption)
-                fideInputSpace.append(inputTitle, ratingInput, dateSec)
-                fideBox.append(fideInputSpace)
-            }
-        }else {
-            if (fideInputSpace) {
-                fideInputSpace.remove()
-                fideInputSpace = false
-            }
-        }
-    })
-}
+    }
+})
