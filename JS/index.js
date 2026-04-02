@@ -68,9 +68,9 @@ if (pageNumber == 0) {
         timeText.classList.add("timeText")
         
         if(localStorage.getItem(`mode${i}`) == "self Improvement"){
-            logo.style.backgroundImage = `url("../assets/fire.png")`
+            logo.style.backgroundImage = `url("assets/fire.png")`
         }else{
-            logo.style.backgroundImage = `url("../assets/sword.png")`
+            logo.style.backgroundImage = `url("assets/sword.png")`
         }
         
         let checkBox = localStorage.getItem(`checkBox${i}`)

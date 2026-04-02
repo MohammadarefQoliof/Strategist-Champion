@@ -119,21 +119,23 @@ cancelBtn.addEventListener("click", ()=>{
 let logHistory = JSON.parse(localStorage.getItem(`ratingHistory${currentPage}`)) || [];
 saveBtn.addEventListener("click", ()=>{
     let newRating = newRatingInput.value;
-    localStorage.setItem(`currentRating${currentPage}`, newRating);
     let currentFullDate = `${monthOfYear[new Date().getMonth()]} ${new Date().getDate()}, ${new Date().getFullYear()}`
+    let currentTime;
     if(new Date().getMinutes() < 10){
         currentTime = `${new Date().getHours()}:0${new Date().getMinutes()}`;
     }else{
-        let currentTime = `${new Date().getHours()}:${new Date().getMinutes()}`;
+        currentTime = `${new Date().getHours()}:${new Date().getMinutes()}`;
     }
+    
     logHistory.push({
         rating: newRating,
-        ratingDifference: localStorage.getItem(`ratingDifference${currentPage}`),
+        ratingDifference: newRating - Number(localStorage.getItem(`currentRating${currentPage}`)),
         platform: localStorage.getItem(`platform${currentPage}`),
         date: currentFullDate,
         time: currentTime
     })
     localStorage.setItem(`ratingHistory${currentPage}`, JSON.stringify(logHistory));
+    localStorage.setItem(`currentRating${currentPage}`, newRating);
     location.reload();
 })
 
@@ -194,3 +196,33 @@ let percentage = total == 0 ? 0 : (passedDays / total) * 100;
 let percentageText = document.querySelector(".percentageText");
 percentageText.textContent = `${Math.round(percentage)}% complete`;
 timeOnOverlay.style.width = `${percentage}%`
+
+let ratingHistorySec = document.querySelector(".ratingHistorySec");
+let ratingHistoryData = JSON.parse(localStorage.getItem(`ratingHistory${currentPage}`)) || [];
+if(ratingHistoryData.length > 0){
+    ratingHistoryData.forEach(i => {
+        if (ratingHistoryData.length > 0) {
+            let ratingHistoryDiv = document.createElement("div");
+            let stringForHistory = document.createElement("p");
+            let deleteDiv = document.createElement("div");
+
+            if(i.ratingDifference > 0){
+                stringForHistory.innerHTML = `<span class="iRating">${i.rating}</span> <span class="greenColor">${i.ratingDifference > 0 ? "+" : ""}${i.ratingDifference}</span> <span class="historyPlatform">${i.platform}</span> <span class="iDate">${i.date}</span> <span class="iTime">${i.time}</span>`;
+            }else if(i.ratingDifference < 0){
+                stringForHistory.innerHTML = `<span class="iRating">${i.rating}</span> <span class="redColor">${i.ratingDifference > 0 ? "+" : ""}${i.ratingDifference}</span> <span class="historyPlatform">${i.platform}</span> <span class="iDate">${i.date}</span> <span class="iTime">${i.time}</span>`;
+            }else{
+                stringForHistory.innerHTML = `<span class="iRating">${i.rating}</span> <span>${i.ratingDifference > 0 ? "+" : ""}${i.ratingDifference}</span> <span class="historyPlatform">${i.platform}</span> <span class="iDate">${i.date}</span> <span class="iTime">${i.time}</span>`;
+            }
+            
+        
+            stringForHistory.classList.add("stringForHistory")
+            ratingHistoryDiv.classList.add("ratingHistoryDiv");
+        
+            ratingHistoryDiv.append(stringForHistory, deleteDiv);
+            ratingHistorySec.append(ratingHistoryDiv);
+        }
+    })
+}else{
+    let historySec = document.querySelector(".historyText");
+    historySec.textContent = "No entries yet. Log your first rating!"
+}
