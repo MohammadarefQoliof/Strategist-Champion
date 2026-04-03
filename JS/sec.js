@@ -1,14 +1,25 @@
 let currentPage = localStorage.getItem("currentPage")
 let platform1 = document.querySelector(".platform1")
+let platform2 = document.createElement("p")
 platform1.textContent = localStorage.getItem(`platform${currentPage}`)
 let title = document.querySelector(".title")
 title.textContent = localStorage.getItem(`chesstitle${currentPage}`)
-let mode1 = document.querySelector(".platform3")
+let fideCheckBox = localStorage.getItem(`checkBox${currentPage}`)
+let platform3 = document.querySelector(".platform3")
+
 if (localStorage.getItem(`mode${currentPage}`) == "self Improvement"){
-    mode1.textContent = "IMPROVEMENT"
+    platform3.textContent = "IMPROVEMENT"
 }else{
-    mode1.textContent = "COMPETITION"
+    platform3.textContent = "COMPETITION"
 }
+if(fideCheckBox == "true"){
+    platform2.classList.add("platform2")
+    platform2.textContent = "+ FIDE"
+    platform3.before(platform2)
+}else{
+    platform2.classList.remove("platform2")
+}
+
 
 let bin = document.querySelector(".bgBin");
 
@@ -27,7 +38,8 @@ bin.addEventListener("click", () => {
         "ratingDifference",
         "remainingDays",
         "chesstitle",
-        "ratingHistory"
+        "ratingHistory",
+        "ratingDifferenceList"
     ];
 
     let maxItems = Number(localStorage.getItem("currentPage")) + 1;
@@ -96,12 +108,25 @@ while (nowMonth > 11) {
 
 dateTime.textContent = `${monthOfYear[currentMonth]} ${currentDay}, ${realCurrentYear} — ${monthOfYear[nowMonth]} ${nowDay}, ${currentYear}`;
 
+if(fideCheckBox == "true"){
+    let fideLogRating = document.createElement("div")
+    let trophy = document.createElement("div")
+    let bgBin = document.querySelector(".bgBin")
+
+    // fideLogRating.textContent = "FIDE"
+    
+    fideLogRating.classList.add("fideBtn")
+    trophy.classList.add("trophy")
+    
+    fideLogRating.append(trophy, "FIDE")
+    bgBin.before(fideLogRating)
+}
+
 let logRatingBtn = document.querySelector(".rightSec button");
 let overlay = document.querySelector(".overlay")
 logRatingBtn.addEventListener("click", ()=>{
     overlay.style.display = "flex";
 })
-
 
 
 let newRatingInput = document.querySelector(".ratingValue");
@@ -129,10 +154,14 @@ saveBtn.addEventListener("click", ()=>{
     }else{
         currentTime = `${new Date().getHours()}:${new Date().getMinutes()}`;
     }
+    let ratingDifferenceList = JSON.parse(localStorage.getItem(`ratingDifferenceList${currentPage}`)) || [];
+    let lastRatingDifference = newRating - Number(localStorage.getItem(`currentRating${currentPage}`))
+    ratingDifferenceList.push(lastRatingDifference)
+    localStorage.setItem(`ratingDifferenceList${currentPage}`, JSON.stringify(ratingDifferenceList))
     
     logHistory.push({
         rating: newRating,
-        ratingDifference: newRating - Number(localStorage.getItem(`currentRating${currentPage}`)),
+        ratingDifference: lastRatingDifference,
         date: currentFullDate,
         time: currentTime
     })
@@ -141,8 +170,11 @@ saveBtn.addEventListener("click", ()=>{
     location.reload();
 })
 
-
-
+document.addEventListener("keydown", (e)=>{
+    if(e.key == "Enter" && overlay.style.display === "flex"){
+        saveBtn.click()
+    }
+})
 
 let remainingDays = document.querySelector(".remainingDays");
 remainingDays.textContent = localStorage.getItem(`remainingDays${currentPage}`);
@@ -208,6 +240,8 @@ if(ratingHistoryData.length > 0){
     for(let i = ratingHistoryData.length - 1; i >= 0; i--){
         let ratingHistoryDiv = document.createElement("div");
         let stringForHistory = document.createElement("p");
+        let backgroundBin = document.createElement("div")
+        let binDiv = document.createElement("div")
         ratingHistorySec.remove()
 
         if(ratingHistoryData[i].ratingDifference > 0){
@@ -220,9 +254,28 @@ if(ratingHistoryData.length > 0){
         
         stringForHistory.classList.add("stringForHistory")
         ratingHistoryDiv.classList.add("ratingHistoryDiv");
+        backgroundBin.classList.add("backgroundBin")
+        binDiv.classList.add("binDiv")
     
-        ratingHistoryDiv.append(stringForHistory);
+        backgroundBin.append(binDiv)
+        ratingHistoryDiv.append(stringForHistory, backgroundBin);
         ratingHistoryMainDiv.append(ratingHistoryDiv);
+
+        backgroundBin.addEventListener("click", ()=>{
+            ratingHistoryData.splice(i, 1)
+            let ratingDifferenceList = JSON.parse(localStorage.getItem(`ratingDifferenceList${currentPage}`))
+            
+            let currentRating = Number(localStorage.getItem(`currentRating${currentPage}`))
+            currentRating -= Number(ratingDifferenceList[i])
+            ratingDifferenceList.splice(i, 1)
+            
+            localStorage.setItem(`ratingDifferenceList${currentPage}`, JSON.stringify(ratingDifferenceList))
+            localStorage.setItem(`currentRating${currentPage}`, currentRating)
+            localStorage.setItem(`ratingHistory${currentPage}`, JSON.stringify(ratingHistoryData))
+            
+            
+            location.reload()
+        })
     }
 }else{
     let historySec = document.querySelector(".historyText");

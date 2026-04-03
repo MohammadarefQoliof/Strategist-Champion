@@ -40,7 +40,18 @@ body{
     font-weight: 600;
     padding: 3px 10px;
     background-color: #735814;
-    border-radius: 3px;
+    border-radius: 7px;
+}
+.platform2{
+    color: orange;
+    background-color: rgba(255, 166, 0, 0.352);
+    border-radius: 7px;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 3px 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .platform3{
     color: rgb(205, 205, 205);
@@ -48,7 +59,7 @@ body{
     font-weight: 600;
     padding: 3px 10px;
     background-color: grey;
-    border-radius: 3px;
+    border-radius: 7px;
 }
 .dateTime{
     color: grey;
@@ -402,9 +413,10 @@ hr{
     border-radius: 15px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     font-size: 20px;
     margin: 15px 0;
-    padding: 0 0 0 20px;
+    padding: 0 30px 0 20px;
 }
 .iRating{
     color: white;
@@ -438,4 +450,50 @@ hr{
 }
 .iRatingDifference{
     font-size: 16px;
+}
+.binDiv{
+    width: 25px;
+    height: 25px;
+    background-image: url("../assets/trash.png");
+    background-size: contain;
+    background-repeat: no-repeat;
+}
+.backgroundBin{
+    width: 45px;
+    height: 45px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    transition: 0.2s;
+}
+.backgroundBin:hover{
+    background-color: rgba(255, 0, 0, 0.1);
+}
+.backgroundBin:hover .binDiv{
+    background-image: url("../assets/redTrash.png");
+}
+.fideBtn{
+    width: 120px;
+    height: 40px;
+    border-radius: 15px;
+    color: orange;
+    border: 3px solid orange;
+    font-size: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 7px;
+    transition: 0.3s;
+    margin: 30px 0 0 0;
+}
+.fideBtn:hover{
+    background-color: rgba(255, 166, 0, 0.15);
+}
+.trophy{
+    width: 25px;
+    height: 25px;
+    background-image: url("../assets/trophy.png");
+    background-size: contain;
+    background-repeat: no-repeat;
 }

@@ -231,7 +231,7 @@ let fideBox = document.querySelector(".checkFide")
 
 let fideInputSpace = false
 
-checkBox.addEventListener("input", () => {
+checkBox.addEventListener("change", () => {
     if (checkBox.checked) {
         if (!fideInputSpace) {
             let inputTitle = document.createElement("h1")
