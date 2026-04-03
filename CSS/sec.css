@@ -239,7 +239,7 @@ body{
     min-height: 110px;
     height: auto;
     margin: 20px 0 0 0;
-    background-color: rgb(18, 18, 18);
+    background-color: rgb(21, 21, 21);
     border: 2px solid rgb(30, 30, 30);
     border-radius: 22px;
     display: flex;
@@ -397,16 +397,18 @@ hr{
 .ratingHistoryDiv{
     width: 90%;
     height: 100px;
-    border: 5px solid black;
+    background-color: rgb(21, 21, 21);
+    border: 3px solid rgb(30, 30, 30);
+    border-radius: 15px;
     display: flex;
     align-items: center;
-    
     font-size: 20px;
+    margin: 15px 0;
     padding: 0 0 0 20px;
 }
 .iRating{
     color: white;
-    font-size: 26px;
+    font-size: 30px;
 }
 .redColor{
     color: red;
@@ -417,9 +419,23 @@ hr{
 .stringForHistory{
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 20px;
 }
-.historyPlatform{
-    font-size: 15px;
-    color: rgba(255, 255, 255, 0.65);
+.timeAndDate{
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+.ratingDiv{
+    width: 60px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 2px;
+}
+.iDate{
+    font-size: 17px;
+}
+.iRatingDifference{
+    font-size: 16px;
 }

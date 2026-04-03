@@ -46,6 +46,9 @@ bin.addEventListener("click", () => {
             }
         });
     }
+    if(localStorage.getItem("ratingDifferencenull")){
+        localStorage.removeItem("ratingDifferencenull")
+    }
     window.location.href = "../index.html";
 });
 
@@ -130,7 +133,6 @@ saveBtn.addEventListener("click", ()=>{
     logHistory.push({
         rating: newRating,
         ratingDifference: newRating - Number(localStorage.getItem(`currentRating${currentPage}`)),
-        platform: localStorage.getItem(`platform${currentPage}`),
         date: currentFullDate,
         time: currentTime
     })
@@ -198,30 +200,30 @@ percentageText.textContent = `${Math.round(percentage)}% complete`;
 timeOnOverlay.style.width = `${percentage}%`
 
 let ratingHistorySec = document.querySelector(".ratingHistorySec");
+let ratingHistoryMainDiv = document.querySelector(".ratingHistory")
 let ratingHistoryData = JSON.parse(localStorage.getItem(`ratingHistory${currentPage}`)) || [];
-if(ratingHistoryData.length > 0){
-    ratingHistoryData.forEach(i => {
-        if (ratingHistoryData.length > 0) {
-            let ratingHistoryDiv = document.createElement("div");
-            let stringForHistory = document.createElement("p");
-            let deleteDiv = document.createElement("div");
+console.log(ratingHistoryData.length);
 
-            if(i.ratingDifference > 0){
-                stringForHistory.innerHTML = `<span class="iRating">${i.rating}</span> <span class="greenColor">${i.ratingDifference > 0 ? "+" : ""}${i.ratingDifference}</span> <span class="historyPlatform">${i.platform}</span> <span class="iDate">${i.date}</span> <span class="iTime">${i.time}</span>`;
-            }else if(i.ratingDifference < 0){
-                stringForHistory.innerHTML = `<span class="iRating">${i.rating}</span> <span class="redColor">${i.ratingDifference > 0 ? "+" : ""}${i.ratingDifference}</span> <span class="historyPlatform">${i.platform}</span> <span class="iDate">${i.date}</span> <span class="iTime">${i.time}</span>`;
-            }else{
-                stringForHistory.innerHTML = `<span class="iRating">${i.rating}</span> <span>${i.ratingDifference > 0 ? "+" : ""}${i.ratingDifference}</span> <span class="historyPlatform">${i.platform}</span> <span class="iDate">${i.date}</span> <span class="iTime">${i.time}</span>`;
-            }
-            
-        
-            stringForHistory.classList.add("stringForHistory")
-            ratingHistoryDiv.classList.add("ratingHistoryDiv");
-        
-            ratingHistoryDiv.append(stringForHistory, deleteDiv);
-            ratingHistorySec.append(ratingHistoryDiv);
+if(ratingHistoryData.length > 0){
+    for(let i = ratingHistoryData.length - 1; i >= 0; i--){
+        let ratingHistoryDiv = document.createElement("div");
+        let stringForHistory = document.createElement("p");
+        ratingHistorySec.remove()
+
+        if(ratingHistoryData[i].ratingDifference > 0){
+            stringForHistory.innerHTML = `<div class="ratingDiv"> <span class="iRating">${ratingHistoryData[i].rating}</span> <span class="greenColor iRatingDifference">${ratingHistoryData[i].ratingDifference > 0 ? "+" : ""}${ratingHistoryData[i].ratingDifference}</span> </div> <div class="timeAndDate"> <span class="iDate">${ratingHistoryData[i].date}</span> · <span class="iDate">${ratingHistoryData[i].time}</span> </div>`;
+        }else if(ratingHistoryData[i].ratingDifference < 0){
+            stringForHistory.innerHTML = `<div class="ratingDiv"> <span class="iRating">${ratingHistoryData[i].rating}</span> <span class="redColor iRatingDifference">${ratingHistoryData[i].ratingDifference > 0 ? "+" : ""}${ratingHistoryData[i].ratingDifference}</span> </div> <div class="timeAndDate"> <span class="iDate">${ratingHistoryData[i].date}</span> · <span class="iDate">${ratingHistoryData[i].time}</span> </div>`;
+        }else{
+            stringForHistory.innerHTML = `<div class="ratingDiv"> <span class="iRating">${ratingHistoryData[i].rating}</span> <span class="iRatingDifference">${ratingHistoryData[i].ratingDifference > 0 ? "+" : ""}${ratingHistoryData[i].ratingDifference}</span> </div><div class="timeAndDate"> <span class="iDate">${ratingHistoryData[i].date}</span> · <span class="iDate">${ratingHistoryData[i].time}</span> </div>`;
         }
-    })
+        
+        stringForHistory.classList.add("stringForHistory")
+        ratingHistoryDiv.classList.add("ratingHistoryDiv");
+    
+        ratingHistoryDiv.append(stringForHistory);
+        ratingHistoryMainDiv.append(ratingHistoryDiv);
+    }
 }else{
     let historySec = document.querySelector(".historyText");
     historySec.textContent = "No entries yet. Log your first rating!"
