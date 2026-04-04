@@ -39,12 +39,12 @@ body{
     font-size: 15px;
     font-weight: 600;
     padding: 3px 10px;
-    background-color: #735814;
+    background-color: #73581466;
     border-radius: 7px;
 }
 .platform2{
     color: orange;
-    background-color: rgba(255, 166, 0, 0.352);
+    background-color: rgba(255, 166, 0, 0.2);
     border-radius: 7px;
     font-size: 15px;
     font-weight: 600;
@@ -54,11 +54,11 @@ body{
     align-items: center;
 }
 .platform3{
-    color: rgb(205, 205, 205);
+    color: rgba(205, 205, 205, 0.86);
     font-size: 15px;
     font-weight: 600;
     padding: 3px 10px;
-    background-color: grey;
+    background-color: rgba(128, 128, 128, 0.3);
     border-radius: 7px;
 }
 .dateTime{

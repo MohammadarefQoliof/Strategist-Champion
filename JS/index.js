@@ -131,7 +131,12 @@ if (pageNumber == 0) {
             }
         }
 
-        let leftDays = totalDays - passedDays;
+        let fideDateName = localStorage.getItem(`fideDateName${i}`)
+        let fideDateNum = localStorage.getItem(`fideDateNum${i}`) || 0
+        let fideDaysLeft = fideDateName == "day" ? Number(fideDateNum) : Number(fideDateNum) * 7;
+
+        let leftDays = totalDays + fideDaysLeft - passedDays;
+        localStorage.setItem(`fideLeftDays${i}`, fideDaysLeft)
         localStorage.setItem(`remainingDays${i}`, leftDays);
         localStorage.setItem(`passedDays${i}`, passedDays);
         
@@ -244,7 +249,6 @@ checkBox.addEventListener("change", () => {
             let dateSelect = document.createElement("select")
             let dateDay = document.createElement("option")
             let dateWeek = document.createElement("option")
-            let dateMonth = document.createElement("option")
             fideInputSpace = document.createElement("div")
 
             ratingInput.type = "number"
@@ -256,10 +260,8 @@ checkBox.addEventListener("change", () => {
             dateInput.value = "1"
             dateDay.value = "day"
             dateWeek.value = "week"
-            dateMonth.value = "month"
             dateDay.textContent = "Day"
             dateWeek.textContent = "Week"
-            dateMonth.textContent = "Month"
 
             inputTitle.textContent = "Current FIDE Rating"
 
@@ -272,7 +274,7 @@ checkBox.addEventListener("change", () => {
             dateInput.classList.add("input", "dateInputOwn")
             dateSelect.classList.add("dateSelect", "input")
 
-            dateSelect.append(dateDay, dateWeek, dateMonth)
+            dateSelect.append(dateDay, dateWeek)
             selectOption.append(dateInput, dateSelect)
             dateSec.append(dateTitle, dateDesc, selectOption)
             fideInputSpace.append(inputTitle, ratingInput, dateSec)

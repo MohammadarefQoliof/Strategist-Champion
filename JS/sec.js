@@ -39,7 +39,11 @@ bin.addEventListener("click", () => {
         "remainingDays",
         "chesstitle",
         "ratingHistory",
-        "ratingDifferenceList"
+        "ratingDifferenceList",
+        "fideDateName",
+        "fideDateNum",
+        "fideLeftDays",
+        "fideRating"
     ];
 
     let maxItems = Number(localStorage.getItem("currentPage")) + 1;
@@ -96,6 +100,11 @@ else if (dateName === "months") {
     nowMonth += dateNum;
 }
 
+if(fideCheckBox == "true"){
+    let fideDaysLeft = localStorage.getItem(`fideLeftDays${currentPage}`)
+    nowDay += Number(fideDaysLeft)
+}
+
 while (nowDay > 31) {
     nowDay -= 31;
     nowMonth += 1;
@@ -140,7 +149,12 @@ if(fideCheckBox == "true"){
             overlayForFide.style.display = "none"
         }, {once: true})
     })
-    
+    // 
+    // saveBtn will be added ---------------------------------
+    // ...
+    // ...
+    // ...
+    // ...
     
     
     let durationSec = document.querySelector(".durationSec")
@@ -154,6 +168,9 @@ if(fideCheckBox == "true"){
     
     fideRatingText.textContent = "FIDE Rating"
     fideRatingNum.textContent = localStorage.getItem(`fideRating${currentPage}`)
+
+
+    let fideRatingJourneyBg = document.createElement("div")
     
     fideRatingSec.append(fideRatingText, fideRatingNum)
     durationSec.before(fideRatingSec)
@@ -247,7 +264,7 @@ if (ratingDifference > 0){
     currentRating.innerHTML = `${localStorage.getItem(`currentRating${currentPage}`)} <span class="decrease">${ratingDifference}</span>`;
     
     ratingDifferenceText.style.color = "red";
-    ratingOnOverlay.style.width = "100%"
+    ratingOnOverlay.style.width = "3%"
     ratingOnOverlay.style.backgroundColor = "red";
     ratingDifferenceText.innerHTML = `<div class="img"></div>${ratingDifference} pts`
     
