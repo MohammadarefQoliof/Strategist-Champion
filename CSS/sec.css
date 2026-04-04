@@ -161,7 +161,6 @@ body{
     background-color: rgba(255, 255, 255, 0.09)
 }
 .ratingAndDuration{
-    width: 100%;
     height: 150px;
     display: flex;
     justify-content: center;
@@ -279,15 +278,7 @@ body{
     display: flex;
     flex-direction: column;
     padding: 20px 20px 40px 20px;
-    position: absolute;
-}
-@keyframes scaleAnimate {
-    from{
-        transform: scale(0.8);
-    }
-    to{
-        transform: scale(1);
-    }
+    position: relative;
 }
 .describe{
     color: grey;
@@ -334,15 +325,6 @@ hr{
 }
 .save{
     margin: 0;
-}
-.animate{
-    animation: closePage 0.17s forwards;
-}
-@keyframes closePage {
-    to{
-        transform: scale(0.9);
-        opacity: 0;
-    }
 }
 .ratingTopTexts{
     width: 89%;
@@ -496,4 +478,105 @@ hr{
     background-image: url("../assets/trophy.png");
     background-size: contain;
     background-repeat: no-repeat;
+}
+.overlayForFide{
+    width: 100%;
+    height: 100vh;
+    z-index: 10;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    left: 0;
+    top: 0;
+}
+.describeForFide{
+    color: grey;
+    font-size: 15px;
+    margin: 5px 0 0 0;
+}
+.inputCardForFide{
+    width: 30%;
+    height: auto;
+    background-color: rgb(17, 17, 17);
+    border-radius: 20px;
+    animation: scaleAnimate 0.3s forwards;
+    display: flex;
+    flex-direction: column;
+    padding: 20px 20px 40px 20px;
+    position: absolute;
+}
+.cancelForFide{
+    width: 120px;
+    height: 40px;
+    border-radius: 15px;
+    background-color: transparent;
+    border: 5px solid transparent;
+    font-size: 16px;
+    color: white;
+    transition: 0.3s;
+}
+.cancelForFide:hover{
+    background-color: rgba(255, 255, 255, 0.04);
+}
+.saveForFide{
+    margin: 0;
+}
+.animate{
+    animation: closePage 0.17s forwards;
+}
+
+@keyframes scaleAnimate {
+    from{
+        transform: scale(0.8);
+    }
+    to{
+        transform: scale(1);
+    }
+}
+@keyframes closePage {
+    to{
+        transform: scale(0.9);
+        opacity: 0;
+    }
+}
+.ratingValueForFide{
+    width: 100%;
+    height: 50px;
+    font-size: 20px;
+    color: white;
+    border-radius: 14px;
+    padding: 10px;
+    background-color: rgb(23, 23, 23);
+    border: 2px solid rgb(35, 35, 35);
+}
+.fideRatingSec{
+    width: 40%;
+    height: 100px;
+    margin: 30px 0 0 0;
+    background-color: rgba(255, 166, 0, 0.167);
+    border: 2px solid rgba(255, 166, 0, 0.418);
+    border-radius: 20px;
+    box-shadow: 0 7px 15px rgb(0, 0, 0);
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 0 0 0 20px;
+    gap: 4px;
+}
+.ratingSecFullWidth{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.fideRatingText{
+    font-size: 15px;
+    color: rgba(255, 166, 0, 0.658);
+}
+.fideRatingNum{
+    font-weight: bold;
 }

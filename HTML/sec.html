@@ -24,7 +24,7 @@
             <p class="dateTime"></p>
         </div>
         <div class="rightSec">
-            <button class="Btn"><span>+</span>&nbsp; Log Rating</button>
+            <button class="Btn btnLogRating"><span>+</span>&nbsp; Log Rating</button>
             <div class="bgBin">
                 <div class="bin"></div>
             </div>
@@ -36,14 +36,16 @@
 
     <div class="main">
 
-        <div class="ratingAndDuration">
-            <div class="ratingSec">
-                <p>Current Rating</p>
-                <h3 class="currentRating"></h3>
-            </div>
-            <div class="durationSec">
-                <p>Days Left</p>
-                <h3 class="remainingDays"></h3>
+        <div class="ratingSecFullWidth">
+            <div class="ratingAndDuration">
+                <div class="ratingSec">
+                    <p>Current Rating</p>
+                    <h3 class="currentRating"></h3>
+                </div>
+                <div class="durationSec">
+                    <p>Days Left</p>
+                    <h3 class="remainingDays"></h3>
+                </div>
             </div>
         </div>
     
@@ -90,7 +92,7 @@
     <div class="overlay">
         <div class="inputCard">
             <h1 class="title">Log New Rating</h1>
-            <p class="describe">Recording a Chess.com practice rating</p>
+            <p class="describe"></p>
             <div class="ratingSection">
                 <p class="newRatingText">New Rating</p>
                 <input type="number" class="ratingValue">
@@ -99,6 +101,22 @@
             <div class="buttons">
                 <button class="cancel">Cancel</button>
                 <button class="Btn save">Save Entry</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="overlayForFide">
+        <div class="inputCardForFide">
+            <h1 class="title">Log New Rating</h1>
+            <p class="describeForFide">Recording a FIDE tournament result</p>
+            <div class="ratingSection">
+                <p class="newRatingText">New Rating</p>
+                <input type="number" class="ratingValueForFide">
+            </div>
+            <hr>
+            <div class="buttons">
+                <button class="cancelForFide">Cancel</button>
+                <button class="Btn saveForFide">Save Entry</button>
             </div>
         </div>
     </div>

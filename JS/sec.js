@@ -108,22 +108,64 @@ while (nowMonth > 11) {
 
 dateTime.textContent = `${monthOfYear[currentMonth]} ${currentDay}, ${realCurrentYear} — ${monthOfYear[nowMonth]} ${nowDay}, ${currentYear}`;
 
+let ratingAndDuration = document.querySelector(".ratingAndDuration")
 if(fideCheckBox == "true"){
+    ratingAndDuration.style.width = "88%"
+    
     let fideLogRating = document.createElement("div")
     let trophy = document.createElement("div")
     let bgBin = document.querySelector(".bgBin")
-
-    // fideLogRating.textContent = "FIDE"
     
     fideLogRating.classList.add("fideBtn")
     trophy.classList.add("trophy")
     
     fideLogRating.append(trophy, "FIDE")
     bgBin.before(fideLogRating)
+    
+    let inputForFide = document.querySelector(".ratingValueForFide")
+    inputForFide.value = localStorage.getItem(`fideRating${currentPage}`)
+    
+    let overlayForFide = document.querySelector(".overlayForFide")
+    fideLogRating.addEventListener("click", ()=>{
+        overlayForFide.style.display = "flex"
+    })
+    
+    let cancelForFideBtn = document.querySelector(".cancelForFide");
+    let inputDiv = document.querySelector(".inputCardForFide");
+    
+    cancelForFideBtn.addEventListener("click", ()=>{
+        inputDiv.classList.add("animate")
+        inputDiv.addEventListener("animationend", ()=>{
+            inputDiv.classList.remove("animate")
+            overlayForFide.style.display = "none"
+        }, {once: true})
+    })
+    
+    
+    
+    let durationSec = document.querySelector(".durationSec")
+    let fideRatingSec = document.createElement("div")
+    let fideRatingText = document.createElement("p")
+    let fideRatingNum = document.createElement("p")
+    
+    fideRatingSec.classList.add("fideRatingSec")
+    fideRatingText.classList.add("fideRatingText")
+    fideRatingNum.classList.add("fideRatingNum")
+    
+    fideRatingText.textContent = "FIDE Rating"
+    fideRatingNum.textContent = localStorage.getItem(`fideRating${currentPage}`)
+    
+    fideRatingSec.append(fideRatingText, fideRatingNum)
+    durationSec.before(fideRatingSec)
+}else{
+    ratingAndDuration.style.width = "100%"
 }
 
-let logRatingBtn = document.querySelector(".rightSec button");
+let logRatingBtn = document.querySelector(".btnLogRating");
 let overlay = document.querySelector(".overlay")
+let describe = document.querySelector(".describe")
+let platformCapitalize = localStorage.getItem(`platform${currentPage}`)[0].toUpperCase() + localStorage.getItem(`platform${currentPage}`).slice(1).toLowerCase()
+describe.textContent = `Recording a ${platformCapitalize} practice rating`
 logRatingBtn.addEventListener("click", ()=>{
     overlay.style.display = "flex";
 })
@@ -234,7 +276,6 @@ timeOnOverlay.style.width = `${percentage}%`
 let ratingHistorySec = document.querySelector(".ratingHistorySec");
 let ratingHistoryMainDiv = document.querySelector(".ratingHistory")
 let ratingHistoryData = JSON.parse(localStorage.getItem(`ratingHistory${currentPage}`)) || [];
-console.log(ratingHistoryData.length);
 
 if(ratingHistoryData.length > 0){
     for(let i = ratingHistoryData.length - 1; i >= 0; i--){
