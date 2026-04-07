@@ -219,6 +219,7 @@ save.addEventListener("click", ()=>{
         let dateTime = document.querySelector(".dateSelect").value
         
         localStorage.setItem(`fideRating${pageNumber}`, fideRating)
+        localStorage.setItem(`currentFideRating${pageNumber}`, fideRating)
         localStorage.setItem(`fideDateNum${pageNumber}`, dateInputOwn)
         localStorage.setItem(`fideDateName${pageNumber}`, dateTime)
     }

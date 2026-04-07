@@ -120,7 +120,32 @@ dateTime.textContent = `${monthOfYear[currentMonth]} ${currentDay}, ${realCurren
 let ratingAndDuration = document.querySelector(".ratingAndDuration")
 if(fideCheckBox == "true"){
     ratingAndDuration.style.width = "88%"
-    
+
+    let currentFideRating = localStorage.getItem(`currentFideRating${currentPage}`)
+    let startFideRating = localStorage.getItem(`fideRating${currentPage}`)
+    let fideRatingDifference = Number(currentFideRating) - Number(startFideRating)
+    localStorage.setItem(`fideRatingDifference${currentPage}`, fideRatingDifference)
+    localStorage.setItem(`fideRatingDifference${currentPage}`, 5)
+    let fideRatingPoints = document.createElement("p")
+    if (Number(localStorage.getItem(`fideRatingDifference${currentPage}`)) > 0){
+        // let currentRating = document.querySelector(".currentRating");
+        // currentRating.innerHTML = `${localStorage.getItem(`currentRating${currentPage}`)} <span class="increase">+${ratingDifference}</span>`;
+        
+        // ratingDifferenceText.style.color = "lightGreen";
+        // ratingOnOverlay.style.width = "100%"
+        // ratingDifferenceText.innerHTML = `<div class="img"></div>+${ratingDifference} pts`
+        
+        // let image = document.querySelector(".img");
+        // image.style.backgroundImage = `url("../assets/increase.png")`;
+        // fideRatingPoints.textContent = `+${fideRatingDifference}`
+        fideRatingPoints.textContent = `+5 pts`
+        fideRatingPoints.classList.add("fideRatingPoints")
+    }else if(fideRatingDifference < 0){
+        
+    }else{
+        fideRatingPoints.textContent = "— 0 pts"
+    }
+
     let fideLogRating = document.createElement("div")
     let trophy = document.createElement("div")
     let bgBin = document.querySelector(".bgBin")
@@ -167,15 +192,55 @@ if(fideCheckBox == "true"){
     fideRatingNum.classList.add("fideRatingNum")
     
     fideRatingText.textContent = "FIDE Rating"
-    fideRatingNum.textContent = localStorage.getItem(`fideRating${currentPage}`)
+    fideRatingNum.textContent = localStorage.getItem(`currentFideRating${currentPage}`)
 
-
+    let ratingJourneyText = document.querySelector(".ratingJourneyText")
+    let diagram = document.querySelector(".diagram")
+    let timeProgress = document.querySelector(".timeProgress")
+    let practicePhase = document.querySelector(".practicePhase")
+    let fideRatingJourneyText = document.createElement("p")
     let fideRatingJourneyBg = document.createElement("div")
+    let fideRatingOverlay = document.createElement("div")
+    let fideRatings = document.createElement("div")
+    let fideRatingStart = document.createElement("p")
+    let fideRatingCurrent = document.createElement("p")
+    let fideRatingOnOverlay = document.createElement("div")
+    let fideTimeProgress = document.createElement("div")
+    let fideTimeProgressText = document.createElement("p")
     
+    fideRatingOnOverlay.classList.add("onOverlay", "fideRatingOnOverlay")
+    fideRatingJourneyText.classList.add("fideRatingJourneyText")
+    fideRatingJourneyBg.classList.add("ratingJourney")
+    fideTimeProgress.classList.add("ratingJourney")
+    fideTimeProgressText.classList.add("fideTimeProgressText")
+    fideRatingOverlay.classList.add("fideRatingOverlay")
+    fideRatings.classList.add("texts")
+    
+    ratingJourneyText.textContent = "PRACTICE RATING JOURNEY"
+    fideRatingStart.innerHTML = `Start: <span class="num">${localStorage.getItem(`fideRating${currentPage}`)}</span>`
+    fideRatingCurrent.innerHTML = `Current: <span class="num">${localStorage.getItem(`currentFideRating${currentPage}`)}`
+    timeProgress.textContent = `PRACTICE PROGRESS - ${localStorage.getItem(`platform${currentPage}`)}`
+    diagram.style.height = "700px"
+    fideRatingJourneyText.textContent = "FIDE RATING JOURNEY"
+    fideTimeProgressText.textContent = "COMPETITION PHASE - FIDE"
+    
+    
+    fideTimeProgress.append(fideTimeProgressText)
+    fideRatingOverlay.append(fideRatingOnOverlay)
+    fideRatingJourneyText.append(fideRatingPoints)
+    fideRatings.append(fideRatingStart, fideRatingCurrent)
+    fideRatingJourneyBg.append(fideRatingJourneyText, fideRatingOverlay, fideRatings)
+    practicePhase.before(fideRatingJourneyBg)
+    practicePhase.after(fideTimeProgress)
     fideRatingSec.append(fideRatingText, fideRatingNum)
     durationSec.before(fideRatingSec)
 }else{
+    let ratingJourneyText = document.querySelector(".ratingJourneyText")
+    let timeProgress = document.querySelector(".timeProgress")
+    
     ratingAndDuration.style.width = "100%"
+    timeProgress.textContent = "TIME PROGRESS"
+    ratingJourneyText.textContent = "Rating Journey"
 }
 
 let logRatingBtn = document.querySelector(".btnLogRating");
