@@ -607,6 +607,19 @@ hr{
     margin: 20px 0 0 40px;
 }
 .fideRatingPoints{
-    color: lightgreen;
     font-size: 15px;
+}
+.imgAndRating{
+    /* width: 150px; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+.imgRatingDiff{
+    width: 24px;
+    height: 24px;
+    /* background-image: url("../assets/increase.png"); */
+    background-size: contain;
+    background-repeat: no-repeat;
 }

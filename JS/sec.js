@@ -123,29 +123,37 @@ if(fideCheckBox == "true"){
 
     let currentFideRating = localStorage.getItem(`currentFideRating${currentPage}`)
     let startFideRating = localStorage.getItem(`fideRating${currentPage}`)
+    let imgAndRating = document.createElement("div")
+    let imgRatingDiff = document.createElement("div")
     let fideRatingDifference = Number(currentFideRating) - Number(startFideRating)
     localStorage.setItem(`fideRatingDifference${currentPage}`, fideRatingDifference)
-    localStorage.setItem(`fideRatingDifference${currentPage}`, 5)
     let fideRatingPoints = document.createElement("p")
     if (Number(localStorage.getItem(`fideRatingDifference${currentPage}`)) > 0){
-        // let currentRating = document.querySelector(".currentRating");
-        // currentRating.innerHTML = `${localStorage.getItem(`currentRating${currentPage}`)} <span class="increase">+${ratingDifference}</span>`;
-        
-        // ratingDifferenceText.style.color = "lightGreen";
-        // ratingOnOverlay.style.width = "100%"
-        // ratingDifferenceText.innerHTML = `<div class="img"></div>+${ratingDifference} pts`
-        
-        // let image = document.querySelector(".img");
-        // image.style.backgroundImage = `url("../assets/increase.png")`;
-        // fideRatingPoints.textContent = `+${fideRatingDifference}`
-        fideRatingPoints.textContent = `+5 pts`
+
+        imgRatingDiff.style.backgroundImage = `url("../assets/increase.png")`
+        fideRatingPoints.textContent = `+${localStorage.getItem(`fideRatingDifference${currentPage}`)} pts`
         fideRatingPoints.classList.add("fideRatingPoints")
-    }else if(fideRatingDifference < 0){
+        fideRatingPoints.style.color = "lightgreen"
+        imgAndRating.classList.add("imgAndRating")
+        imgRatingDiff.classList.add("imgRatingDiff")
+        
+    }else if(Number(localStorage.getItem(`fideRatingDifference${currentPage}`)) < 0){
+        imgRatingDiff.style.backgroundImage = `url("../assets/decrease.png")`
+        fideRatingPoints.textContent = `${localStorage.getItem(`fideRatingDifference${currentPage}`)} pts`
+        fideRatingPoints.classList.add("fideRatingPoints")
+        imgAndRating.classList.add("imgAndRating")
+        imgRatingDiff.classList.add("imgRatingDiff")
+        fideRatingPoints.style.color = "red"
         
     }else{
+        fideRatingPoints.classList.remove("fideRatingPoints")
+        imgAndRating.classList.remove("imgAndRating")
+        imgRatingDiff.classList.remove("imgRatingDiff")
         fideRatingPoints.textContent = "— 0 pts"
+        // fideRatingPoints.style.color = "default"
     }
-
+    imgAndRating.append(imgRatingDiff, fideRatingPoints)
+    
     let fideLogRating = document.createElement("div")
     let trophy = document.createElement("div")
     let bgBin = document.querySelector(".bgBin")
@@ -227,7 +235,7 @@ if(fideCheckBox == "true"){
     
     fideTimeProgress.append(fideTimeProgressText)
     fideRatingOverlay.append(fideRatingOnOverlay)
-    fideRatingJourneyText.append(fideRatingPoints)
+    fideRatingJourneyText.append(imgAndRating)
     fideRatings.append(fideRatingStart, fideRatingCurrent)
     fideRatingJourneyBg.append(fideRatingJourneyText, fideRatingOverlay, fideRatings)
     practicePhase.before(fideRatingJourneyBg)
