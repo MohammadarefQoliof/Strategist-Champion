@@ -148,7 +148,7 @@ if (pageNumber == 0) {
 
         card.addEventListener("click", ()=>{
             localStorage.setItem("currentPage", i);
-            window.location.href = `HTML/sec.html`
+            window.location.href = `sec.html`
         })
 
         timeLeft.append(timeText, time)

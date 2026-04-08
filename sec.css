@@ -95,14 +95,14 @@ body{
 .bin{
     width: 20px;
     height: 20px;
-    background-image: url("../assets/redTrash.png");
+    background-image: url("./assets/redTrash.png");
     background-size: contain;
     background-repeat: no-repeat;
 }
 .cross{
     width: 20px;
     height: 20px;
-    background-image: url("../assets/cross.png");
+    background-image: url("./assets/cross.png");
     background-size: contain;
     background-repeat: no-repeat;
 }
@@ -120,7 +120,7 @@ body{
     border-bottom: 1px solid rgb(30, 30, 30);
 }
 .logo{
-    background-image: url("../assets/crown.png");
+    background-image: url("./assets/crown.png");
     background-size: contain;
     background-repeat: no-repeat;
     width: 36px;
@@ -436,7 +436,7 @@ hr{
 .binDiv{
     width: 25px;
     height: 25px;
-    background-image: url("../assets/trash.png");
+    background-image: url("./assets/trash.png");
     background-size: contain;
     background-repeat: no-repeat;
 }
@@ -453,7 +453,7 @@ hr{
     background-color: rgba(255, 0, 0, 0.1);
 }
 .backgroundBin:hover .binDiv{
-    background-image: url("../assets/redTrash.png");
+    background-image: url("./assets/redTrash.png");
 }
 .fideBtn{
     width: 120px;
@@ -475,7 +475,7 @@ hr{
 .trophy{
     width: 25px;
     height: 25px;
-    background-image: url("../assets/trophy.png");
+    background-image: url("./assets/trophy.png");
     background-size: contain;
     background-repeat: no-repeat;
 }
@@ -579,6 +579,9 @@ hr{
 }
 .fideRatingNum{
     font-weight: bold;
+    display: flex;
+    align-items: flex-end;
+    gap: 7px;
 }
 .fideRatingJourneyText{
     font-size: 15px;
@@ -596,21 +599,19 @@ hr{
     border-radius: 15px;
     margin: 20px 0 0 3%;
 }
-.fideRatingOnOverlay{
-    width: 3%;
-    background-color: orange;
-}
 .fideTimeProgressText{
-    font-size: 18px;
+    width: 89%;
+    font-size: 15px;
     font-weight: 600;
     color: grey;
     margin: 20px 0 0 40px;
+    display: flex;
+    justify-content: space-between;
 }
 .fideRatingPoints{
     font-size: 15px;
 }
 .imgAndRating{
-    /* width: 150px; */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -619,7 +620,10 @@ hr{
 .imgRatingDiff{
     width: 24px;
     height: 24px;
-    /* background-image: url("../assets/increase.png"); */
     background-size: contain;
     background-repeat: no-repeat;
+}
+.fideRatingNumDifference{
+    font-size: 17px;
+    margin-bottom: 2px;
 }

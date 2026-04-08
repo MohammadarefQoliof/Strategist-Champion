@@ -65,12 +65,12 @@ bin.addEventListener("click", () => {
     if(localStorage.getItem("ratingDifferencenull")){
         localStorage.removeItem("ratingDifferencenull")
     }
-    window.location.href = "../index.html";
+    window.location.href = "index.html";
 });
 
 let cross = document.querySelector(".bgCross");
 cross.addEventListener("click", ()=>{
-    window.location.href = "../index.html";
+    window.location.href = "index.html";
 })
 
 let monthOfYear = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", 
@@ -118,39 +118,55 @@ while (nowMonth > 11) {
 dateTime.textContent = `${monthOfYear[currentMonth]} ${currentDay}, ${realCurrentYear} — ${monthOfYear[nowMonth]} ${nowDay}, ${currentYear}`;
 
 let ratingAndDuration = document.querySelector(".ratingAndDuration")
+
+let timeProgress = document.querySelector(".timeProgress")
+timeProgress.textContent = "TIME PROGRESS"
+
 if(fideCheckBox == "true"){
     ratingAndDuration.style.width = "88%"
 
     let currentFideRating = localStorage.getItem(`currentFideRating${currentPage}`)
     let startFideRating = localStorage.getItem(`fideRating${currentPage}`)
     let imgAndRating = document.createElement("div")
+    let fideRatingOnOverlay = document.createElement("div")
     let imgRatingDiff = document.createElement("div")
+    let fideRatingNumDifference = document.createElement("p")
     let fideRatingDifference = Number(currentFideRating) - Number(startFideRating)
     localStorage.setItem(`fideRatingDifference${currentPage}`, fideRatingDifference)
     let fideRatingPoints = document.createElement("p")
     if (Number(localStorage.getItem(`fideRatingDifference${currentPage}`)) > 0){
 
-        imgRatingDiff.style.backgroundImage = `url("../assets/increase.png")`
+        imgRatingDiff.style.backgroundImage = `url("./assets/increase.png")`
         fideRatingPoints.textContent = `+${localStorage.getItem(`fideRatingDifference${currentPage}`)} pts`
         fideRatingPoints.classList.add("fideRatingPoints")
         fideRatingPoints.style.color = "lightgreen"
         imgAndRating.classList.add("imgAndRating")
         imgRatingDiff.classList.add("imgRatingDiff")
+        fideRatingOnOverlay.style.backgroundColor = "orange"
+        fideRatingOnOverlay.style.width = "100%"
+        fideRatingNumDifference.textContent = `+${localStorage.getItem(`fideRatingDifference${currentPage}`)}`
+        fideRatingNumDifference.style.color = 'lightgreen'
         
     }else if(Number(localStorage.getItem(`fideRatingDifference${currentPage}`)) < 0){
-        imgRatingDiff.style.backgroundImage = `url("../assets/decrease.png")`
+        imgRatingDiff.style.backgroundImage = `url("./assets/decrease.png")`
         fideRatingPoints.textContent = `${localStorage.getItem(`fideRatingDifference${currentPage}`)} pts`
         fideRatingPoints.classList.add("fideRatingPoints")
         imgAndRating.classList.add("imgAndRating")
         imgRatingDiff.classList.add("imgRatingDiff")
         fideRatingPoints.style.color = "red"
+        fideRatingOnOverlay.style.backgroundColor = "red"
+        fideRatingOnOverlay.style.width = "3%"
+        fideRatingNumDifference.textContent = `${localStorage.getItem(`fideRatingDifference${currentPage}`)}`
+        fideRatingNumDifference.style.color = 'red'
         
     }else{
         fideRatingPoints.classList.remove("fideRatingPoints")
         imgAndRating.classList.remove("imgAndRating")
         imgRatingDiff.classList.remove("imgRatingDiff")
         fideRatingPoints.textContent = "— 0 pts"
-        // fideRatingPoints.style.color = "default"
+        fideRatingOnOverlay.style.backgroundColor = "orange"
+        fideRatingOnOverlay.style.width = "3%"
+        fideRatingNumDifference.style.opacity = "0"
     }
     imgAndRating.append(imgRatingDiff, fideRatingPoints)
     
@@ -165,7 +181,7 @@ if(fideCheckBox == "true"){
     bgBin.before(fideLogRating)
     
     let inputForFide = document.querySelector(".ratingValueForFide")
-    inputForFide.value = localStorage.getItem(`fideRating${currentPage}`)
+    inputForFide.value = localStorage.getItem(`currentFideRating${currentPage}`)
     
     let overlayForFide = document.querySelector(".overlayForFide")
     fideLogRating.addEventListener("click", ()=>{
@@ -182,13 +198,39 @@ if(fideCheckBox == "true"){
             overlayForFide.style.display = "none"
         }, {once: true})
     })
-    // 
-    // saveBtn will be added ---------------------------------
-    // ...
-    // ...
-    // ...
-    // ...
-    
+
+    let saveForFide = document.querySelector(".saveForFide")
+
+    saveForFide.addEventListener("click", ()=>{
+        let newRating = inputForFide.value;
+        let currentFullDate = `${monthOfYear[new Date().getMonth()]} ${new Date().getDate()}, ${new Date().getFullYear()}`
+        let currentTime;
+        if(new Date().getMinutes() < 10){
+            currentTime = `${new Date().getHours()}:0${new Date().getMinutes()}`;
+        }else{
+            currentTime = `${new Date().getHours()}:${new Date().getMinutes()}`;
+        }
+        let ratingDifferenceList = JSON.parse(localStorage.getItem(`fideRatingDifferenceList${currentPage}`)) || [];
+        let lastRatingDifference = newRating - Number(localStorage.getItem(`currentFideRating${currentPage}`))
+        ratingDifferenceList.push(lastRatingDifference)
+        localStorage.setItem(`fideRatingDifferenceList${currentPage}`, JSON.stringify(ratingDifferenceList))
+        
+        logHistory.push({
+            rating: newRating,
+            ratingDifference: lastRatingDifference,
+            date: currentFullDate,
+            time: currentTime
+        })
+        localStorage.setItem(`fideRatingHistory${currentPage}`, JSON.stringify(logHistory));
+        localStorage.setItem(`currentFideRating${currentPage}`, newRating);
+        location.reload();
+    })
+
+    document.addEventListener("keydown", (e)=>{
+        if(e.key == "Enter"){
+            saveForFide.click()
+        }
+    })
     
     let durationSec = document.querySelector(".durationSec")
     let fideRatingSec = document.createElement("div")
@@ -198,13 +240,13 @@ if(fideCheckBox == "true"){
     fideRatingSec.classList.add("fideRatingSec")
     fideRatingText.classList.add("fideRatingText")
     fideRatingNum.classList.add("fideRatingNum")
-    
+    fideRatingNumDifference.classList.add("fideRatingNumDifference")
+
     fideRatingText.textContent = "FIDE Rating"
     fideRatingNum.textContent = localStorage.getItem(`currentFideRating${currentPage}`)
-
+    
     let ratingJourneyText = document.querySelector(".ratingJourneyText")
     let diagram = document.querySelector(".diagram")
-    let timeProgress = document.querySelector(".timeProgress")
     let practicePhase = document.querySelector(".practicePhase")
     let fideRatingJourneyText = document.createElement("p")
     let fideRatingJourneyBg = document.createElement("div")
@@ -212,42 +254,33 @@ if(fideCheckBox == "true"){
     let fideRatings = document.createElement("div")
     let fideRatingStart = document.createElement("p")
     let fideRatingCurrent = document.createElement("p")
-    let fideRatingOnOverlay = document.createElement("div")
-    let fideTimeProgress = document.createElement("div")
-    let fideTimeProgressText = document.createElement("p")
-    
-    fideRatingOnOverlay.classList.add("onOverlay", "fideRatingOnOverlay")
+
+    fideRatingOnOverlay.classList.add("onOverlay")
     fideRatingJourneyText.classList.add("fideRatingJourneyText")
     fideRatingJourneyBg.classList.add("ratingJourney")
-    fideTimeProgress.classList.add("ratingJourney")
-    fideTimeProgressText.classList.add("fideTimeProgressText")
     fideRatingOverlay.classList.add("fideRatingOverlay")
     fideRatings.classList.add("texts")
     
     ratingJourneyText.textContent = "PRACTICE RATING JOURNEY"
     fideRatingStart.innerHTML = `Start: <span class="num">${localStorage.getItem(`fideRating${currentPage}`)}</span>`
     fideRatingCurrent.innerHTML = `Current: <span class="num">${localStorage.getItem(`currentFideRating${currentPage}`)}`
-    timeProgress.textContent = `PRACTICE PROGRESS - ${localStorage.getItem(`platform${currentPage}`)}`
-    diagram.style.height = "700px"
+    diagram.style.height = "550px"
     fideRatingJourneyText.textContent = "FIDE RATING JOURNEY"
-    fideTimeProgressText.textContent = "COMPETITION PHASE - FIDE"
-    
-    
-    fideTimeProgress.append(fideTimeProgressText)
+
+
+    fideRatingNum.append(fideRatingNumDifference)
     fideRatingOverlay.append(fideRatingOnOverlay)
     fideRatingJourneyText.append(imgAndRating)
     fideRatings.append(fideRatingStart, fideRatingCurrent)
     fideRatingJourneyBg.append(fideRatingJourneyText, fideRatingOverlay, fideRatings)
     practicePhase.before(fideRatingJourneyBg)
-    practicePhase.after(fideTimeProgress)
     fideRatingSec.append(fideRatingText, fideRatingNum)
     durationSec.before(fideRatingSec)
 }else{
     let ratingJourneyText = document.querySelector(".ratingJourneyText")
-    let timeProgress = document.querySelector(".timeProgress")
     
     ratingAndDuration.style.width = "100%"
-    timeProgress.textContent = "TIME PROGRESS"
+
     ratingJourneyText.textContent = "Rating Journey"
 }
 
@@ -330,7 +363,7 @@ if (ratingDifference > 0){
     ratingDifferenceText.innerHTML = `<div class="img"></div>+${ratingDifference} pts`
     
     let image = document.querySelector(".img");
-    image.style.backgroundImage = `url("../assets/increase.png")`;
+    image.style.backgroundImage = `url("./assets/increase.png")`;
 }else if(ratingDifference < 0){
 
     let currentRating = document.querySelector(".currentRating");
@@ -342,7 +375,7 @@ if (ratingDifference > 0){
     ratingDifferenceText.innerHTML = `<div class="img"></div>${ratingDifference} pts`
     
     let image = document.querySelector(".img");
-    image.style.backgroundImage = `url("../assets/decrease.png")`;
+    image.style.backgroundImage = `url("./assets/decrease.png")`;
 }else{
     let currentRating = document.querySelector(".currentRating");
     currentRating.innerHTML = `${localStorage.getItem(`currentRating${currentPage}`)}`;
@@ -358,7 +391,8 @@ let leftDays = Number(localStorage.getItem(`remainingDays${currentPage}`));
 let passedDays = Number(localStorage.getItem(`passedDays${currentPage}`));
 let timeOnOverlay = document.querySelector(".timeOnOverlay");
 let total = passedDays + leftDays;
-let percentage = total == 0 ? 0 : (passedDays / total) * 100;
+let percentage = total <= 0 ? 0 : (passedDays / total) * 100;
+percentage = percentage >= 100 ? 100 : percentage;
 let percentageText = document.querySelector(".percentageText");
 percentageText.textContent = `${Math.round(percentage)}% complete`;
 timeOnOverlay.style.width = `${percentage}%`
