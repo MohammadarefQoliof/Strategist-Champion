@@ -200,6 +200,7 @@ if(fideCheckBox == "true"){
     })
 
     let saveForFide = document.querySelector(".saveForFide")
+    let logHistory = JSON.parse(localStorage.getItem(`allRatingHistory${currentPage}`)) || []
 
     saveForFide.addEventListener("click", ()=>{
         let newRating = inputForFide.value;
@@ -216,12 +217,13 @@ if(fideCheckBox == "true"){
         localStorage.setItem(`fideRatingDifferenceList${currentPage}`, JSON.stringify(ratingDifferenceList))
         
         logHistory.push({
+            type: "fide",
             rating: newRating,
             ratingDifference: lastRatingDifference,
             date: currentFullDate,
             time: currentTime
         })
-        localStorage.setItem(`fideRatingHistory${currentPage}`, JSON.stringify(logHistory));
+        localStorage.setItem(`allRatingHistory${currentPage}`, JSON.stringify(logHistory));
         localStorage.setItem(`currentFideRating${currentPage}`, newRating);
         location.reload();
     })
@@ -309,7 +311,7 @@ cancelBtn.addEventListener("click", ()=>{
     }, {once: true})
 })
 
-let logHistory = JSON.parse(localStorage.getItem(`ratingHistory${currentPage}`)) || [];
+let logHistory = JSON.parse(localStorage.getItem(`allRatingHistory${currentPage}`)) || [];
 saveBtn.addEventListener("click", ()=>{
     let newRating = newRatingInput.value;
     let currentFullDate = `${monthOfYear[new Date().getMonth()]} ${new Date().getDate()}, ${new Date().getFullYear()}`
@@ -325,12 +327,13 @@ saveBtn.addEventListener("click", ()=>{
     localStorage.setItem(`ratingDifferenceList${currentPage}`, JSON.stringify(ratingDifferenceList))
     
     logHistory.push({
+        type: "normal",
         rating: newRating,
         ratingDifference: lastRatingDifference,
         date: currentFullDate,
         time: currentTime
     })
-    localStorage.setItem(`ratingHistory${currentPage}`, JSON.stringify(logHistory));
+    localStorage.setItem(`allRatingHistory${currentPage}`, JSON.stringify(logHistory));
     localStorage.setItem(`currentRating${currentPage}`, newRating);
     location.reload();
 })
@@ -436,7 +439,7 @@ if(ratingHistoryData.length > 0){
             
             localStorage.setItem(`ratingDifferenceList${currentPage}`, JSON.stringify(ratingDifferenceList))
             localStorage.setItem(`currentRating${currentPage}`, currentRating)
-            localStorage.setItem(`ratingHistory${currentPage}`, JSON.stringify(ratingHistoryData))
+            localStorage.setItem(`allRatingHistory${currentPage}`, JSON.stringify(ratingHistoryData))
             
             
             location.reload()
@@ -446,3 +449,54 @@ if(ratingHistoryData.length > 0){
     let historySec = document.querySelector(".historyText");
     historySec.textContent = "No entries yet. Log your first rating!"
 }
+
+
+let fideRatingHistoryData = JSON.parse(localStorage.getItem(`allRatingHistory${currentPage}`)) || [];
+
+
+if(fideRatingHistoryData.length > 0){
+    for(let i = fideRatingHistoryData.length - 1; i >= 0; i--){
+        let ratingHistoryDiv = document.createElement("div");
+        let stringForHistory = document.createElement("p");
+        let backgroundBin = document.createElement("div")
+        let binDiv = document.createElement("div")
+        ratingHistorySec.remove()
+
+        if(fideRatingHistoryData[i].ratingDifference > 0){
+            stringForHistory.innerHTML = `<div class="ratingDiv"> <span class="iRating">${fideRatingHistoryData[i].rating}</span> <span class="greenColor iRatingDifference">${fideRatingHistoryData[i].ratingDifference > 0 ? "+" : ""}${fideRatingHistoryData[i].ratingDifference}</span> </div> <div class="timeAndDate"> <span class="iDate">${fideRatingHistoryData[i].date}</span> · <span class="iDate">${fideRatingHistoryData[i].time}</span> </div>`;
+        }else if(fideRatingHistoryData[i].ratingDifference < 0){
+            stringForHistory.innerHTML = `<div class="ratingDiv"> <span class="iRating">${fideRatingHistoryData[i].rating}</span> <span class="redColor iRatingDifference">${fideRatingHistoryData[i].ratingDifference > 0 ? "+" : ""}${fideRatingHistoryData[i].ratingDifference}</span> </div> <div class="timeAndDate"> <span class="iDate">${fideRatingHistoryData[i].date}</span> · <span class="iDate">${fideRatingHistoryData[i].time}</span> </div>`;
+        }else{
+            stringForHistory.innerHTML = `<div class="ratingDiv"> <span class="iRating">${fideRatingHistoryData[i].rating}</span> <span class="iRatingDifference">${fideRatingHistoryData[i].ratingDifference > 0 ? "+" : ""}${fideRatingHistoryData[i].ratingDifference}</span> </div><div class="timeAndDate"> <span class="iDate">${fideRatingHistoryData[i].date}</span> · <span class="iDate">${fideRatingHistoryData[i].time}</span> </div>`;
+        }
+        
+        stringForHistory.classList.add("stringForHistory")
+        ratingHistoryDiv.classList.add("ratingHistoryDiv");
+        backgroundBin.classList.add("backgroundBin")
+        binDiv.classList.add("binDiv")
+    
+        backgroundBin.append(binDiv)
+        ratingHistoryDiv.append(stringForHistory, backgroundBin);
+        ratingHistoryMainDiv.append(ratingHistoryDiv);
+
+        backgroundBin.addEventListener("click", ()=>{
+            fideRatingHistoryData.splice(i, 1)
+            let ratingDifferenceList = JSON.parse(localStorage.getItem(`fideRatingDifferenceList${currentPage}`))
+            
+            let currentRating = Number(localStorage.getItem(`currentFideRating${currentPage}`))
+            currentRating -= Number(ratingDifferenceList[i])
+            ratingDifferenceList.splice(i, 1)
+            
+            localStorage.setItem(`fideRatingDifferenceList${currentPage}`, JSON.stringify(ratingDifferenceList))
+            localStorage.setItem(`currentFideRating${currentPage}`, currentRating)
+            localStorage.setItem(`allRatingHistory${currentPage}`, JSON.stringify(fideRatingHistoryData))
+            
+            
+            location.reload()
+        })
+    }
+}else{
+    let historySec = document.querySelector(".historyText") || "";
+    historySec.textContent = "No entries yet. Log your first rating!"
+}
+console.log(JSON.parse(localStorage.getItem(`allRatingHistory${currentPage}`)));
