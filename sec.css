@@ -627,3 +627,13 @@ hr{
     font-size: 17px;
     margin-bottom: 2px;
 }
+/* .fideHistory{
+
+} */
+.iFideRating{
+    font-size: 30px;
+    color: orange;
+}
+.fideType{
+    color: orange;
+}

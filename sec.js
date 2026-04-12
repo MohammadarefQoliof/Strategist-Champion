@@ -43,7 +43,8 @@ bin.addEventListener("click", () => {
         "fideDateName",
         "fideDateNum",
         "fideLeftDays",
-        "fideRating"
+        "fideRating",
+        "allRatingHistory"
     ];
 
     let maxItems = Number(localStorage.getItem("currentPage")) + 1;
@@ -211,10 +212,10 @@ if(fideCheckBox == "true"){
         }else{
             currentTime = `${new Date().getHours()}:${new Date().getMinutes()}`;
         }
-        let ratingDifferenceList = JSON.parse(localStorage.getItem(`fideRatingDifferenceList${currentPage}`)) || [];
+        let ratingDifferenceList = JSON.parse(localStorage.getItem(`ratingDifferenceList${currentPage}`)) || [];
         let lastRatingDifference = newRating - Number(localStorage.getItem(`currentFideRating${currentPage}`))
         ratingDifferenceList.push(lastRatingDifference)
-        localStorage.setItem(`fideRatingDifferenceList${currentPage}`, JSON.stringify(ratingDifferenceList))
+        localStorage.setItem(`ratingDifferenceList${currentPage}`, JSON.stringify(ratingDifferenceList))
         
         logHistory.push({
             type: "fide",
@@ -400,103 +401,84 @@ let percentageText = document.querySelector(".percentageText");
 percentageText.textContent = `${Math.round(percentage)}% complete`;
 timeOnOverlay.style.width = `${percentage}%`
 
+
 let ratingHistorySec = document.querySelector(".ratingHistorySec");
 let ratingHistoryMainDiv = document.querySelector(".ratingHistory")
-let ratingHistoryData = JSON.parse(localStorage.getItem(`ratingHistory${currentPage}`)) || [];
+let allRatingHistoryData = JSON.parse(localStorage.getItem(`allRatingHistory${currentPage}`)) || [];
 
-if(ratingHistoryData.length > 0){
-    for(let i = ratingHistoryData.length - 1; i >= 0; i--){
+
+if(allRatingHistoryData.length > 0){
+    for(let i = allRatingHistoryData.length - 1; i >= 0; i--){
         let ratingHistoryDiv = document.createElement("div");
         let stringForHistory = document.createElement("p");
         let backgroundBin = document.createElement("div")
         let binDiv = document.createElement("div")
         ratingHistorySec.remove()
+        
+        if(allRatingHistoryData[i].ratingDifference > 0 && allRatingHistoryData[i].type == "normal"){
+            stringForHistory.innerHTML = `<div class="ratingDiv"> <span class="iRating">${allRatingHistoryData[i].rating}</span> <span class="greenColor iRatingDifference">${allRatingHistoryData[i].ratingDifference > 0 ? "+" : ""}${allRatingHistoryData[i].ratingDifference}</span> </div> <div class="timeAndDate"> <span class="iDate">${allRatingHistoryData[i].date}</span> · <span class="iDate">${allRatingHistoryData[i].time}</span> </div>`;
+        }else if(allRatingHistoryData[i].ratingDifference < 0 && allRatingHistoryData[i].type == "normal"){
+            stringForHistory.innerHTML = `<div class="ratingDiv"> <span class="iRating">${allRatingHistoryData[i].rating}</span> <span class="redColor iRatingDifference">${allRatingHistoryData[i].ratingDifference > 0 ? "+" : ""}${allRatingHistoryData[i].ratingDifference}</span> </div> <div class="timeAndDate"> <span class="iDate">${allRatingHistoryData[i].date}</span> · <span class="iDate">${allRatingHistoryData[i].time}</span> </div>`;
+        }else if(allRatingHistoryData[i].ratingDifference == 0 && allRatingHistoryData[i].type == "normal"){
+            stringForHistory.innerHTML = `<div class="ratingDiv"> <span class="iRating">${allRatingHistoryData[i].rating}</span> <span class="iRatingDifference">${allRatingHistoryData[i].ratingDifference > 0 ? "+" : ""}${allRatingHistoryData[i].ratingDifference}</span> </div><div class="timeAndDate"> <span class="iDate">${allRatingHistoryData[i].date}</span> · <span class="iDate">${allRatingHistoryData[i].time}</span> </div>`;
+        }else if(allRatingHistoryData[i].ratingDifference > 0 && allRatingHistoryData[i].type == "fide"){
+            stringForHistory.innerHTML = `<div class="ratingDiv"> <span class="iFideRating">${allRatingHistoryData[i].rating}</span> <span class="greenColor iRatingDifference">${allRatingHistoryData[i].ratingDifference > 0 ? "+" : ""}${allRatingHistoryData[i].ratingDifference}</span> </div> <div class"fideType">FIDE</div> <div class="timeAndDate"> <span class="iDate">${allRatingHistoryData[i].date}</span> · <span class="iDate">${allRatingHistoryData[i].time}</span> </div>`;
+        }else if(allRatingHistoryData[i].ratingDifference < 0 && allRatingHistoryData[i].type == "fide"){
 
-        if(ratingHistoryData[i].ratingDifference > 0){
-            stringForHistory.innerHTML = `<div class="ratingDiv"> <span class="iRating">${ratingHistoryData[i].rating}</span> <span class="greenColor iRatingDifference">${ratingHistoryData[i].ratingDifference > 0 ? "+" : ""}${ratingHistoryData[i].ratingDifference}</span> </div> <div class="timeAndDate"> <span class="iDate">${ratingHistoryData[i].date}</span> · <span class="iDate">${ratingHistoryData[i].time}</span> </div>`;
-        }else if(ratingHistoryData[i].ratingDifference < 0){
-            stringForHistory.innerHTML = `<div class="ratingDiv"> <span class="iRating">${ratingHistoryData[i].rating}</span> <span class="redColor iRatingDifference">${ratingHistoryData[i].ratingDifference > 0 ? "+" : ""}${ratingHistoryData[i].ratingDifference}</span> </div> <div class="timeAndDate"> <span class="iDate">${ratingHistoryData[i].date}</span> · <span class="iDate">${ratingHistoryData[i].time}</span> </div>`;
-        }else{
-            stringForHistory.innerHTML = `<div class="ratingDiv"> <span class="iRating">${ratingHistoryData[i].rating}</span> <span class="iRatingDifference">${ratingHistoryData[i].ratingDifference > 0 ? "+" : ""}${ratingHistoryData[i].ratingDifference}</span> </div><div class="timeAndDate"> <span class="iDate">${ratingHistoryData[i].date}</span> · <span class="iDate">${ratingHistoryData[i].time}</span> </div>`;
+        }else if(allRatingHistoryData[i].ratingDifference == 0 && allRatingHistoryData[i].type == "fide"){
+
         }
         
         stringForHistory.classList.add("stringForHistory")
-        ratingHistoryDiv.classList.add("ratingHistoryDiv");
         backgroundBin.classList.add("backgroundBin")
         binDiv.classList.add("binDiv")
-    
+        
         backgroundBin.append(binDiv)
         ratingHistoryDiv.append(stringForHistory, backgroundBin);
-        ratingHistoryMainDiv.append(ratingHistoryDiv);
-
+        
+        
+        if(allRatingHistoryData[i].type == "fide"){
+            ratingHistoryDiv.classList.add("ratingHistoryDiv", "fideHistory");
+        }else{
+            ratingHistoryDiv.classList.add("ratingHistoryDiv");
+        }
+        
         backgroundBin.addEventListener("click", ()=>{
-            ratingHistoryData.splice(i, 1)
             let ratingDifferenceList = JSON.parse(localStorage.getItem(`ratingDifferenceList${currentPage}`))
+            if (allRatingHistoryData[i].type == "normal"){
+                let currentRating = Number(localStorage.getItem(`currentRating${currentPage}`))
+                
+                currentRating -= Number(ratingDifferenceList[i])
+                ratingDifferenceList.splice(i, 1)
+                
+                localStorage.setItem(`currentRating${currentPage}`, currentRating)
+                
+            }else{
+                
+                
+                let currentFideRating = Number(localStorage.getItem(`currentFideRating${currentPage}`))
+                currentFideRating -= Number(ratingDifferenceList[i])
+                ratingDifferenceList.splice(i, 1)
+                
+                localStorage.setItem(`currentFideRating${currentPage}`, currentFideRating)
+            }
             
-            let currentRating = Number(localStorage.getItem(`currentRating${currentPage}`))
-            currentRating -= Number(ratingDifferenceList[i])
-            ratingDifferenceList.splice(i, 1)
-            
-            localStorage.setItem(`ratingDifferenceList${currentPage}`, JSON.stringify(ratingDifferenceList))
-            localStorage.setItem(`currentRating${currentPage}`, currentRating)
-            localStorage.setItem(`allRatingHistory${currentPage}`, JSON.stringify(ratingHistoryData))
-            
-            
-            location.reload()
-        })
-    }
-}else{
-    let historySec = document.querySelector(".historyText");
-    historySec.textContent = "No entries yet. Log your first rating!"
-}
-
-
-let fideRatingHistoryData = JSON.parse(localStorage.getItem(`allRatingHistory${currentPage}`)) || [];
-
-
-if(fideRatingHistoryData.length > 0){
-    for(let i = fideRatingHistoryData.length - 1; i >= 0; i--){
-        let ratingHistoryDiv = document.createElement("div");
-        let stringForHistory = document.createElement("p");
-        let backgroundBin = document.createElement("div")
-        let binDiv = document.createElement("div")
-        ratingHistorySec.remove()
-
-        if(fideRatingHistoryData[i].ratingDifference > 0){
-            stringForHistory.innerHTML = `<div class="ratingDiv"> <span class="iRating">${fideRatingHistoryData[i].rating}</span> <span class="greenColor iRatingDifference">${fideRatingHistoryData[i].ratingDifference > 0 ? "+" : ""}${fideRatingHistoryData[i].ratingDifference}</span> </div> <div class="timeAndDate"> <span class="iDate">${fideRatingHistoryData[i].date}</span> · <span class="iDate">${fideRatingHistoryData[i].time}</span> </div>`;
-        }else if(fideRatingHistoryData[i].ratingDifference < 0){
-            stringForHistory.innerHTML = `<div class="ratingDiv"> <span class="iRating">${fideRatingHistoryData[i].rating}</span> <span class="redColor iRatingDifference">${fideRatingHistoryData[i].ratingDifference > 0 ? "+" : ""}${fideRatingHistoryData[i].ratingDifference}</span> </div> <div class="timeAndDate"> <span class="iDate">${fideRatingHistoryData[i].date}</span> · <span class="iDate">${fideRatingHistoryData[i].time}</span> </div>`;
-        }else{
-            stringForHistory.innerHTML = `<div class="ratingDiv"> <span class="iRating">${fideRatingHistoryData[i].rating}</span> <span class="iRatingDifference">${fideRatingHistoryData[i].ratingDifference > 0 ? "+" : ""}${fideRatingHistoryData[i].ratingDifference}</span> </div><div class="timeAndDate"> <span class="iDate">${fideRatingHistoryData[i].date}</span> · <span class="iDate">${fideRatingHistoryData[i].time}</span> </div>`;
-        }
-        
-        stringForHistory.classList.add("stringForHistory")
-        ratingHistoryDiv.classList.add("ratingHistoryDiv");
-        backgroundBin.classList.add("backgroundBin")
-        binDiv.classList.add("binDiv")
+            allRatingHistoryData.splice(i, 1)
     
-        backgroundBin.append(binDiv)
-        ratingHistoryDiv.append(stringForHistory, backgroundBin);
-        ratingHistoryMainDiv.append(ratingHistoryDiv);
-
-        backgroundBin.addEventListener("click", ()=>{
-            fideRatingHistoryData.splice(i, 1)
-            let ratingDifferenceList = JSON.parse(localStorage.getItem(`fideRatingDifferenceList${currentPage}`))
-            
-            let currentRating = Number(localStorage.getItem(`currentFideRating${currentPage}`))
-            currentRating -= Number(ratingDifferenceList[i])
-            ratingDifferenceList.splice(i, 1)
-            
-            localStorage.setItem(`fideRatingDifferenceList${currentPage}`, JSON.stringify(ratingDifferenceList))
-            localStorage.setItem(`currentFideRating${currentPage}`, currentRating)
-            localStorage.setItem(`allRatingHistory${currentPage}`, JSON.stringify(fideRatingHistoryData))
-            
+            localStorage.setItem(`ratingDifferenceList${currentPage}`, JSON.stringify(ratingDifferenceList))
+            localStorage.setItem(`allRatingHistory${currentPage}`, JSON.stringify(allRatingHistoryData))
             
             location.reload()
         })
+
+        ratingHistoryMainDiv.append(ratingHistoryDiv);
     }
+
+
 }else{
     let historySec = document.querySelector(".historyText") || "";
     historySec.textContent = "No entries yet. Log your first rating!"
 }
 console.log(JSON.parse(localStorage.getItem(`allRatingHistory${currentPage}`)));
+
+
