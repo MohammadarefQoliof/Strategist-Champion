@@ -25,26 +25,28 @@ let bin = document.querySelector(".bgBin");
 
 bin.addEventListener("click", () => {
     let keys = [
-        "checkBox",
-        "dateName",
-        "dateNum",
+        "chesstitle",
         "mode",
         "platform",
-        "startDay",
-        "startMonth",
-        "startRating",
         "currentRating",
-        "passedDays",
-        "ratingDifference",
+        "startRating",
+        "dateNum",
+        "dateName",
+        "checkBox",
+        "startMonth",
+        "startDay",
+        "fideRating",
+        "currentFideRating",
+        "fideDateNum",
+        "fideDateName",
+        "fideLeftDays",
         "remainingDays",
-        "chesstitle",
+        "passedDays",
+        "fideRatingDifference",
+        "ratingDifference",
         "ratingHistory",
         "ratingDifferenceList",
-        "fideDateName",
-        "fideDateNum",
-        "fideLeftDays",
-        "fideRating",
-        "allRatingHistory"
+        "allRatingHistory",
     ];
 
     let maxItems = Number(localStorage.getItem("currentPage")) + 1;
