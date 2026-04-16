@@ -40,6 +40,7 @@ body{
     color: white;
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 .topSec{
     width: 55%;
@@ -49,7 +50,7 @@ body{
     padding: 20px 0 0 0;
     margin: 10px 0;
     justify-content: space-between;
-    border-bottom: 5px solid rgb(30, 30, 30);
+    border-bottom: 2px solid rgb(30, 30, 30);
 }
 .main h1{
     font-family: "Playfair Display", serif;
@@ -425,4 +426,55 @@ body{
 .decrease{
     font-size: 17px;
     color: red;
+}
+@media screen and (max-width: 765px) {
+    .main h1{
+        font-size: 25px;
+    }
+    .topSec{
+        width: 90%;
+        padding: 0 10px;
+        border: none;
+    }
+    .btn-primary{
+        width: 200px;
+        height: 50px;
+    }
+    .inputCard{
+        width: 90%;
+        max-width: 450px;
+        max-height: 100vh;
+    }
+    .goalTitle{
+        margin: 10px 0 5px 0;
+    }
+    .modeInput, .platformInput{
+        width: 145px;
+    }
+    .ratingInput{
+        width: 140px;
+    }
+    .durationInput{
+        width: 55px;
+    }
+    .dateInput{
+        width: 80px;
+    }
+    .checkFide{
+        margin: 15px 0 0 0;
+        padding: 10px;
+    }
+    .dateTitle{
+        margin: 10px 0 0 0;
+    }
+    .inputTitle{
+        font-size: 18px;
+    }
+    .checkFide label p{
+        font-size: 12px;
+    }
+    .card{
+        width: 90%;
+        max-width: 500px;
+    }
 }
