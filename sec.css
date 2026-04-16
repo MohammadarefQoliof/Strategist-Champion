@@ -234,7 +234,7 @@ body{
     height: auto;
     margin: 0 0 40px 0;
     background-color: rgb(15, 15, 15);
-    padding: 0 0 30px 140px;
+    padding: 0 0 30px 9%;
     color: white;
 }
 .ratingHistory{
@@ -359,6 +359,9 @@ hr{
     height: 100%;
     border-radius: 15px;
     transition: 0.5s;
+}
+.fideRatingOnOverlay{
+    width: 3%;
 }
 .ratingOnOverlay{
     width: 3%;
@@ -639,4 +642,125 @@ hr{
     color: orange;
     margin: 0 5px 0 0;
     font-weight: 700;
+}
+
+@media screen and (max-width: 447px) {
+    .iDate{
+        font-size: 14px;
+    }
+    .fideType{
+        font-size: 14px;
+    }
+    .top{
+        height: 250px;
+        padding: 0 15px 15px 25px;
+        justify-content: flex-start;
+        flex-direction: column;
+    }
+    .leftSec, .rightSec{
+        width: 100%;
+        gap: 5px;
+        justify-content: flex-start;
+    }
+    .Btn{
+        font-size: 14px;
+        margin: 30px 10px 0 0;
+        padding: 0 10px;
+    }
+    .ratingTopTexts{
+        margin: 20px 0 0 20px;
+    }
+    .ratingOverlay, .fideRatingOverlay{
+        margin: 20px 0 0 5%;
+    }
+    .texts{
+        margin: 10px 0 0 19px;
+    }
+    .inputCard{
+        width: 95%;
+    }
+    .ratingSec, .fideRatingSec, .durationSec{
+        margin: 30px 0 0 0;
+        padding: 0 0 0 10px;
+        min-height: 100px;
+        height: auto;
+    }
+    .rightSec .Btn span{
+        font-size: 19px;
+    }
+    .fideRatingJourneyText{
+        margin: 20px 0 0 19px;
+    }
+    .ratingAndDuration{
+        gap: 10px;
+    }
+    .onOverlay{
+        width: 8%;
+    }
+    .fideRatingOnOverlay{
+        width: 8%;
+    }
+    .inputCardForFide{
+        width: 95%;
+    }
+    .saveForFide, .save{
+        margin: 0;
+    }
+}
+@media screen and (min-width: 448px) and (max-width: 767px) {
+    .top{
+        height: 250px;
+        padding: 0 15px 15px 25px;
+        justify-content: flex-start;
+        flex-direction: column;
+    }
+    .leftSec, .rightSec{
+        width: 100%;
+        gap: 5px;
+        justify-content: flex-start;
+    }
+    .Btn{
+        font-size: 14px;
+        margin: 30px 10px 0 0;
+        padding: 0 10px;
+    }
+    .ratingTopTexts{
+        margin: 20px 0 0 20px;
+    }
+    .ratingOverlay, .fideRatingOverlay{
+        margin: 20px 0 0 5%;
+    }
+    .texts{
+        margin: 10px 0 0 19px;
+    }
+    .inputCard{
+        width: 95%;
+    }
+    .ratingSec, .fideRatingSec, .durationSec{
+        margin: 30px 0 0 0;
+        padding: 0 0 0 10px;
+        min-height: 100px;
+        height: auto;
+    }
+    .rightSec .Btn span{
+        font-size: 19px;
+    }
+    .fideRatingJourneyText{
+        margin: 20px 0 0 19px;
+    }
+    .ratingAndDuration{
+        gap: 10px;
+    }
+    .onOverlay{
+        width: 8%;
+    }
+    .fideRatingOnOverlay{
+        width: 8%;
+    }
+    .inputCardForFide{
+        width: 95%;
+    }
+    .saveForFide, .save{
+        margin: 0;
+    }
 }

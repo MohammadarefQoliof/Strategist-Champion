@@ -91,7 +91,7 @@ let dateTime = document.querySelector(".dateTime");
 let dateName = localStorage.getItem(`dateName${currentPage}`);
 let dateNum = Number(localStorage.getItem(`dateNum${currentPage}`));
 
-if(localStorage.getItem(`startDay${currentPage}`) == null){
+if(localStorage.getItem(`startYear${currentPage}`) == null){
     let currentMonth = new Date().getMonth();
     let currentDay = new Date().getDate();
     let currentYear = new Date().getFullYear();
@@ -173,7 +173,6 @@ if(fideCheckBox == "true"){
         imgRatingDiff.classList.add("imgRatingDiff")
         fideRatingPoints.style.color = "red"
         fideRatingOnOverlay.style.backgroundColor = "red"
-        fideRatingOnOverlay.style.width = "3%"
         fideRatingNumDifference.textContent = `${localStorage.getItem(`fideRatingDifference${currentPage}`)}`
         fideRatingNumDifference.style.color = 'red'
         
@@ -183,7 +182,6 @@ if(fideCheckBox == "true"){
         imgRatingDiff.classList.remove("imgRatingDiff")
         fideRatingPoints.textContent = "— 0 pts"
         fideRatingOnOverlay.style.backgroundColor = "orange"
-        fideRatingOnOverlay.style.width = "3%"
         fideRatingNumDifference.style.opacity = "0"
     }
     imgAndRating.append(imgRatingDiff, fideRatingPoints)
@@ -245,12 +243,6 @@ if(fideCheckBox == "true"){
         localStorage.setItem(`currentFideRating${currentPage}`, newRating);
         location.reload();
     })
-
-    document.addEventListener("keydown", (e)=>{
-        if(e.key == "Enter"){
-            saveForFide.click()
-        }
-    })
     
     let durationSec = document.querySelector(".durationSec")
     let fideRatingSec = document.createElement("div")
@@ -275,7 +267,7 @@ if(fideCheckBox == "true"){
     let fideRatingStart = document.createElement("p")
     let fideRatingCurrent = document.createElement("p")
 
-    fideRatingOnOverlay.classList.add("onOverlay")
+    fideRatingOnOverlay.classList.add("onOverlay", "fideRatingOnOverlay")
     fideRatingJourneyText.classList.add("fideRatingJourneyText")
     fideRatingJourneyBg.classList.add("ratingJourney")
     fideRatingOverlay.classList.add("fideRatingOverlay")
@@ -356,11 +348,6 @@ saveBtn.addEventListener("click", ()=>{
     location.reload();
 })
 
-document.addEventListener("keydown", (e)=>{
-    if(e.key == "Enter" && overlay.style.display === "flex"){
-        saveBtn.click()
-    }
-})
 
 let remainingDays = document.querySelector(".remainingDays");
 remainingDays.textContent = localStorage.getItem(`remainingDays${currentPage}`);
@@ -391,7 +378,6 @@ if (ratingDifference > 0){
     currentRating.innerHTML = `${localStorage.getItem(`currentRating${currentPage}`)} <span class="decrease">${ratingDifference}</span>`;
     
     ratingDifferenceText.style.color = "red";
-    ratingOnOverlay.style.width = "3%"
     ratingOnOverlay.style.backgroundColor = "red";
     ratingDifferenceText.innerHTML = `<div class="img"></div>${ratingDifference} pts`
     
@@ -405,8 +391,8 @@ if (ratingDifference > 0){
 
 let startDate = document.querySelector(".startDate");
 let lastDate = document.querySelector(".lastDate");
-// startDate.textContent = `${monthOfYear[currentMonth]} ${currentDay}, ${realCurrentYear}`;
-// lastDate.textContent = `${monthOfYear[nowMonth]} ${nowDay}, ${currentYear}`;
+startDate.textContent = `${monthOfYear[localStorage.getItem(`startMonth${currentPage}`)]} ${localStorage.getItem(`startDay${currentPage}`)}, ${localStorage.getItem(`startYear${currentPage}`)}`;
+lastDate.textContent = `${monthOfYear[localStorage.getItem(`lastMonth${currentPage}`)]} ${localStorage.getItem(`lastDay${currentPage}`)}, ${localStorage.getItem(`lastYear${currentPage}`)}`;
 
 let leftDays = Number(localStorage.getItem(`remainingDays${currentPage}`));
 let passedDays = Number(localStorage.getItem(`passedDays${currentPage}`));
@@ -441,9 +427,9 @@ if(allRatingHistoryData.length > 0){
         }else if(allRatingHistoryData[i].ratingDifference > 0 && allRatingHistoryData[i].type == "fide"){
             stringForHistory.innerHTML = `<div class="ratingDiv"> <span class="iFideRating">${allRatingHistoryData[i].rating}</span> <span class="greenColor iRatingDifference">${allRatingHistoryData[i].ratingDifference > 0 ? "+" : ""}${allRatingHistoryData[i].ratingDifference}</span> </div>  <div class="timeAndDate"><div class="fideType">FIDE</div> <span class="iDate">${allRatingHistoryData[i].date}</span> · <span class="iDate">${allRatingHistoryData[i].time}</span> </div>`;
         }else if(allRatingHistoryData[i].ratingDifference < 0 && allRatingHistoryData[i].type == "fide"){
-
+            stringForHistory.innerHTML = `<div class="ratingDiv"> <span class="iFideRating">${allRatingHistoryData[i].rating}</span> <span class="redColor iRatingDifference">${allRatingHistoryData[i].ratingDifference > 0 ? "+" : ""}${allRatingHistoryData[i].ratingDifference}</span> </div>  <div class="timeAndDate"><div class="fideType">FIDE</div> <span class="iDate">${allRatingHistoryData[i].date}</span> · <span class="iDate">${allRatingHistoryData[i].time}</span> </div>`;
         }else if(allRatingHistoryData[i].ratingDifference == 0 && allRatingHistoryData[i].type == "fide"){
-
+            stringForHistory.innerHTML = `<div class="ratingDiv"> <span class="iFideRating">${allRatingHistoryData[i].rating}</span> <span class="iRatingDifference">${allRatingHistoryData[i].ratingDifference > 0 ? "+" : ""}${allRatingHistoryData[i].ratingDifference}</span> </div>  <div class="timeAndDate"><div class="fideType">FIDE</div> <span class="iDate">${allRatingHistoryData[i].date}</span> · <span class="iDate">${allRatingHistoryData[i].time}</span> </div>`;
         }
         
         stringForHistory.classList.add("stringForHistory")
@@ -461,7 +447,7 @@ if(allRatingHistoryData.length > 0){
         }
         
         backgroundBin.addEventListener("click", ()=>{
-            let ratingDifferenceList = JSON.parse(localStorage.getItem(`ratingDifferenceList${currentPage}`))
+            let ratingDifferenceList = JSON.parse(localStorage.getItem(`ratingDifferenceList${currentPage}`)) || []
             if (allRatingHistoryData[i].type == "normal"){
                 let currentRating = Number(localStorage.getItem(`currentRating${currentPage}`))
                 
@@ -469,10 +455,7 @@ if(allRatingHistoryData.length > 0){
                 ratingDifferenceList.splice(i, 1)
                 
                 localStorage.setItem(`currentRating${currentPage}`, currentRating)
-                
             }else{
-                
-                
                 let currentFideRating = Number(localStorage.getItem(`currentFideRating${currentPage}`))
                 currentFideRating -= Number(ratingDifferenceList[i])
                 ratingDifferenceList.splice(i, 1)
@@ -496,6 +479,6 @@ if(allRatingHistoryData.length > 0){
     let historySec = document.querySelector(".historyText") || "";
     historySec.textContent = "No entries yet. Log your first rating!"
 }
-console.log(JSON.parse(localStorage.getItem(`allRatingHistory${currentPage}`)));
+console.log(JSON.parse(localStorage.getItem(`allRatingHistory${currentPage}`)) || []);
 
 
