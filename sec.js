@@ -47,20 +47,16 @@ bin.addEventListener("click", () => {
         "ratingHistory",
         "ratingDifferenceList",
         "allRatingHistory",
-        "startMonth",
-        "startDay",
         "startYear",
         "lastDay",
         "lastMonth",
         "lastYear"
     ];
 
-    let maxItems = Number(localStorage.getItem("currentPage")) + 1;
-    let pageNum = localStorage.getItem("pageNumber");
-    pageNum--;
-    localStorage.setItem("pageNumber", pageNum);
+    let deleteIndex = Number(localStorage.getItem("currentPage"));
+    let totalItems = Number(localStorage.getItem("pageNumber"));
 
-    for (let i = 1; i < maxItems; i++) {
+    for (let i = deleteIndex; i < totalItems; i++) {
         keys.forEach(key => {
             let nextValue = localStorage.getItem(key + (i + 1));
 
@@ -71,9 +67,17 @@ bin.addEventListener("click", () => {
             }
         });
     }
-    if(localStorage.getItem("ratingDifferencenull")){
-        localStorage.removeItem("ratingDifferencenull")
+
+    keys.forEach(key => {
+        localStorage.removeItem(key + totalItems);
+    });
+
+    localStorage.setItem("pageNumber", totalItems - 1);
+
+    if (deleteIndex > totalItems - 1) {
+        localStorage.setItem("currentPage", totalItems - 1);
     }
+
     window.location.href = "index.html";
 });
 
