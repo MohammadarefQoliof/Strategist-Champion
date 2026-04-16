@@ -47,6 +47,12 @@ bin.addEventListener("click", () => {
         "ratingHistory",
         "ratingDifferenceList",
         "allRatingHistory",
+        "startMonth",
+        "startDay",
+        "startYear",
+        "lastDay",
+        "lastMonth",
+        "lastYear"
     ];
 
     let maxItems = Number(localStorage.getItem("currentPage")) + 1;
@@ -85,40 +91,49 @@ let dateTime = document.querySelector(".dateTime");
 let dateName = localStorage.getItem(`dateName${currentPage}`);
 let dateNum = Number(localStorage.getItem(`dateNum${currentPage}`));
 
-let currentMonth = new Date().getMonth();
-let currentDay = new Date().getDate();
-let currentYear = new Date().getFullYear();
-let realCurrentYear = new Date().getFullYear();
-
-let nowDay = currentDay;
-let nowMonth = currentMonth;
-
-if (dateName === "days") {
-    nowDay += dateNum;
+if(localStorage.getItem(`startDay${currentPage}`) == null){
+    let currentMonth = new Date().getMonth();
+    let currentDay = new Date().getDate();
+    let currentYear = new Date().getFullYear();
+    let realCurrentYear = new Date().getFullYear();
+    
+    let nowDay = currentDay;
+    let nowMonth = currentMonth;
+    
+    if (dateName === "days") {
+        nowDay += dateNum;
+    }
+    else if (dateName === "weeks") {
+        nowDay += dateNum * 7;
+    }
+    else if (dateName === "months") {
+        nowMonth += dateNum;
+    }
+    
+    if(fideCheckBox == "true"){
+        let fideDaysLeft = localStorage.getItem(`fideLeftDays${currentPage}`)
+        nowDay += Number(fideDaysLeft)
+    }
+    
+    while (nowDay > 31) {
+        nowDay -= 31;
+        nowMonth += 1;
+    }
+    
+    while (nowMonth > 11) {
+        nowMonth -= 12;
+        currentYear += 1;
+    }
+    
+    localStorage.setItem(`startMonth${currentPage}`, currentMonth)
+    localStorage.setItem(`startDay${currentPage}`, currentDay)
+    localStorage.setItem(`startYear${currentPage}`, realCurrentYear)
+    localStorage.setItem(`lastMonth${currentPage}`, nowMonth)
+    localStorage.setItem(`lastDay${currentPage}`, nowDay)
+    localStorage.setItem(`lastYear${currentPage}`, currentYear)
 }
-else if (dateName === "weeks") {
-    nowDay += dateNum * 7;
-}
-else if (dateName === "months") {
-    nowMonth += dateNum;
-}
 
-if(fideCheckBox == "true"){
-    let fideDaysLeft = localStorage.getItem(`fideLeftDays${currentPage}`)
-    nowDay += Number(fideDaysLeft)
-}
-
-while (nowDay > 31) {
-    nowDay -= 31;
-    nowMonth += 1;
-}
-
-while (nowMonth > 11) {
-    nowMonth -= 12;
-    currentYear += 1;
-}
-
-dateTime.textContent = `${monthOfYear[currentMonth]} ${currentDay}, ${realCurrentYear} — ${monthOfYear[nowMonth]} ${nowDay}, ${currentYear}`;
+dateTime.textContent = `${monthOfYear[localStorage.getItem(`startMonth${currentPage}`)]} ${localStorage.getItem(`startDay${currentPage}`)}, ${localStorage.getItem(`startYear${currentPage}`)} — ${monthOfYear[localStorage.getItem(`lastMonth${currentPage}`)]} ${localStorage.getItem(`lastDay${currentPage}`)}, ${localStorage.getItem(`lastYear${currentPage}`)}`;
 
 let ratingAndDuration = document.querySelector(".ratingAndDuration")
 
@@ -390,8 +405,8 @@ if (ratingDifference > 0){
 
 let startDate = document.querySelector(".startDate");
 let lastDate = document.querySelector(".lastDate");
-startDate.textContent = `${monthOfYear[currentMonth]} ${currentDay}, ${realCurrentYear}`;
-lastDate.textContent = `${monthOfYear[nowMonth]} ${nowDay}, ${currentYear}`;
+// startDate.textContent = `${monthOfYear[currentMonth]} ${currentDay}, ${realCurrentYear}`;
+// lastDate.textContent = `${monthOfYear[nowMonth]} ${nowDay}, ${currentYear}`;
 
 let leftDays = Number(localStorage.getItem(`remainingDays${currentPage}`));
 let passedDays = Number(localStorage.getItem(`passedDays${currentPage}`));
