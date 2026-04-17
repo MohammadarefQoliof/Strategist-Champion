@@ -646,13 +646,13 @@ hr{
 
 @media screen and (max-width: 447px) {
     .iDate{
-        font-size: 14px;
+        font-size: 1ch;
     }
     .fideType{
         font-size: 14px;
     }
     .top{
-        height: 250px;
+        height: 230px;
         padding: 0 15px 15px 25px;
         justify-content: flex-start;
         flex-direction: column;
@@ -681,7 +681,7 @@ hr{
     }
     .ratingSec, .fideRatingSec, .durationSec{
         margin: 30px 0 0 0;
-        padding: 0 0 0 10px;
+        padding: 0 0 0 15px;
         min-height: 100px;
         height: auto;
     }
@@ -690,6 +690,9 @@ hr{
     }
     .fideRatingJourneyText{
         margin: 20px 0 0 19px;
+    }
+    .ratingSec{
+        width: 150px;
     }
     .ratingAndDuration{
         gap: 10px;
@@ -705,11 +708,17 @@ hr{
     }
     .saveForFide, .save{
         margin: 0;
+    }
+    .modes{
+        margin: 0 0 5px 0;
+    }
+    .stringForHistory{
+        gap: 10px;
     }
 }
 @media screen and (min-width: 448px) and (max-width: 767px) {
     .top{
-        height: 250px;
+        height: 230px;
         padding: 0 15px 15px 25px;
         justify-content: flex-start;
         flex-direction: column;
@@ -738,7 +747,7 @@ hr{
     }
     .ratingSec, .fideRatingSec, .durationSec{
         margin: 30px 0 0 0;
-        padding: 0 0 0 10px;
+        padding: 0 0 0 15px;
         min-height: 100px;
         height: auto;
     }
@@ -762,5 +771,11 @@ hr{
     }
     .saveForFide, .save{
         margin: 0;
+    }
+    .modes{
+        margin: 0 0 5px 0;
+    }
+    .stringForHistory{
+        gap: 10px;
     }
 }
