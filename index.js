@@ -141,7 +141,8 @@ if (pageNumber == 0) {
         localStorage.setItem(`passedDays${i}`, passedDays);
         
         if (leftDays <= 0) {
-            time.textContent = `0d`;
+            time.style.color = "red";
+            time.textContent = `Done`;
         } else {
             time.textContent = `${leftDays}d`;
         }

@@ -24,61 +24,7 @@ if(fideCheckBox == "true"){
 let bin = document.querySelector(".bgBin");
 
 bin.addEventListener("click", () => {
-    let keys = [
-        "chesstitle",
-        "mode",
-        "platform",
-        "currentRating",
-        "startRating",
-        "dateNum",
-        "dateName",
-        "checkBox",
-        "startMonth",
-        "startDay",
-        "fideRating",
-        "currentFideRating",
-        "fideDateNum",
-        "fideDateName",
-        "fideLeftDays",
-        "remainingDays",
-        "passedDays",
-        "fideRatingDifference",
-        "ratingDifference",
-        "ratingHistory",
-        "ratingDifferenceList",
-        "allRatingHistory",
-        "startYear",
-        "lastDay",
-        "lastMonth",
-        "lastYear"
-    ];
-
-    let deleteIndex = Number(localStorage.getItem("currentPage"));
-    let totalItems = Number(localStorage.getItem("pageNumber"));
-
-    for (let i = deleteIndex; i < totalItems; i++) {
-        keys.forEach(key => {
-            let nextValue = localStorage.getItem(key + (i + 1));
-
-            if (nextValue !== null) {
-                localStorage.setItem(key + i, nextValue);
-            } else {
-                localStorage.removeItem(key + i);
-            }
-        });
-    }
-
-    keys.forEach(key => {
-        localStorage.removeItem(key + totalItems);
-    });
-
-    localStorage.setItem("pageNumber", totalItems - 1);
-
-    if (deleteIndex > totalItems - 1) {
-        localStorage.setItem("currentPage", totalItems - 1);
-    }
-
-    window.location.href = "index.html";
+    deletePlan();
 });
 
 let cross = document.querySelector(".bgCross");
@@ -352,10 +298,6 @@ saveBtn.addEventListener("click", ()=>{
     location.reload();
 })
 
-
-let remainingDays = document.querySelector(".remainingDays");
-remainingDays.textContent = localStorage.getItem(`remainingDays${currentPage}`);
-
 let startRating = document.querySelector(".startRating");
 let currentRatingText = document.querySelector(".currentRatingText");
 startRating.innerHTML = `Start: <span class="num">${localStorage.getItem(`startRating${currentPage}`)}</span>`;
@@ -483,6 +425,83 @@ if(allRatingHistoryData.length > 0){
     let historySec = document.querySelector(".historyText") || "";
     historySec.textContent = "No entries yet. Log your first rating!"
 }
-console.log(JSON.parse(localStorage.getItem(`allRatingHistory${currentPage}`)) || []);
+
+let remainDays = localStorage.getItem(`remainingDays${currentPage}`);
+let resultOverlay = document.querySelector(".resultOverlay");
+let remainingDays = document.querySelector(".remainingDays");
+let removePlanBtn = document.querySelector(".removePlan");
+let backToGoalsBtn = document.querySelector(".backToGoals");
+if (remainDays <= 0){
+    resultOverlay.style.display = "flex";
+    remainingDays.style.color = "red";
+    remainingDays.textContent = "Done";
+    removePlanBtn.addEventListener("click", ()=>{
+        deletePlan();
+    })
+    backToGoalsBtn.addEventListener("click", ()=>{
+        window.location.href = "index.html";
+    })
+}else{
+    remainingDays.textContent = localStorage.getItem(`remainingDays${currentPage}`);
+}
 
 
+// Functions
+
+function deletePlan(){
+    let keys = [
+        "chesstitle",
+        "mode",
+        "platform",
+        "currentRating",
+        "startRating",
+        "dateNum",
+        "dateName",
+        "checkBox",
+        "startMonth",
+        "startDay",
+        "fideRating",
+        "currentFideRating",
+        "fideDateNum",
+        "fideDateName",
+        "fideLeftDays",
+        "remainingDays",
+        "passedDays",
+        "fideRatingDifference",
+        "ratingDifference",
+        "ratingHistory",
+        "ratingDifferenceList",
+        "allRatingHistory",
+        "startYear",
+        "lastDay",
+        "lastMonth",
+        "lastYear"
+    ];
+
+    let deleteIndex = Number(localStorage.getItem("currentPage"));
+    let totalItems = Number(localStorage.getItem("pageNumber"));
+
+    for (let i = deleteIndex; i < totalItems; i++) {
+        keys.forEach(key => {
+            let nextValue = localStorage.getItem(key + (i + 1));
+
+            if (nextValue !== null) {
+                localStorage.setItem(key + i, nextValue);
+            } else {
+                localStorage.removeItem(key + i);
+            }
+        });
+    }
+
+    keys.forEach(key => {
+        localStorage.removeItem(key + totalItems);
+    });
+
+    localStorage.setItem("pageNumber", totalItems - 1);
+
+    if (deleteIndex > totalItems - 1) {
+        localStorage.setItem("currentPage", totalItems - 1);
+    }
+
+    window.location.href = "index.html";
+}
