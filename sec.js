@@ -251,9 +251,7 @@ let overlay = document.querySelector(".overlay")
 let describe = document.querySelector(".describe")
 let platformCapitalize = localStorage.getItem(`platform${currentPage}`)[0].toUpperCase() + localStorage.getItem(`platform${currentPage}`).slice(1).toLowerCase()
 describe.textContent = `Recording a ${platformCapitalize} practice rating`
-logRatingBtn.addEventListener("click", ()=>{
-    overlay.style.display = "flex";
-})
+
 
 
 let newRatingInput = document.querySelector(".ratingValue");
@@ -432,6 +430,23 @@ let remainingDays = document.querySelector(".remainingDays");
 let removePlanBtn = document.querySelector(".removePlan");
 let backToGoalsBtn = document.querySelector(".backToGoals");
 if (remainDays <= 0){
+    let resultDuration = document.querySelector(".durationText");
+    let resultRatingDifference = document.querySelector(".ratingDifferenceText");
+    let finalRating = document.querySelector(".finalRatingText");
+    finalRating.innerHTML = `${localStorage.getItem(`startRating${currentPage}`)} -> <span style="color: orange;">${localStorage.getItem(`currentRating${currentPage}`)}</span>`
+
+    if(Number(localStorage.getItem(`ratingDifference${currentPage}`)) > 0){
+        resultRatingDifference.textContent = `+${localStorage.getItem(`ratingDifference${currentPage}`)} pts`
+        resultRatingDifference.style.color = "lightGreen"
+    }else if(Number(localStorage.getItem(`ratingDifference${currentPage}`)) < 0){
+        resultRatingDifference.textContent = `${localStorage.getItem(`ratingDifference${currentPage}`)} pts`
+        resultRatingDifference.style.color = "red"
+    }else{
+        resultRatingDifference.textContent = `${localStorage.getItem(`ratingDifference${currentPage}`)} pts`
+    }
+
+
+    resultDuration.textContent = `${localStorage.getItem(`dateNum${currentPage}`)} ${localStorage.getItem(`dateName${currentPage}`)}`
     resultOverlay.style.display = "flex";
     remainingDays.style.color = "red";
     remainingDays.textContent = "Done";
@@ -439,15 +454,20 @@ if (remainDays <= 0){
         deletePlan();
     })
     backToGoalsBtn.addEventListener("click", ()=>{
-        window.location.href = "index.html";
+        resultOverlay.style.display = "none";
+    })
+    logRatingBtn.addEventListener("click", ()=>{
+        resultOverlay.style.display = "flex";
     })
 }else{
     remainingDays.textContent = localStorage.getItem(`remainingDays${currentPage}`);
+    logRatingBtn.addEventListener("click", ()=>{
+        overlay.style.display = "flex";
+    })
 }
 
 
 // Functions
-
 function deletePlan(){
     let keys = [
         "chesstitle",
