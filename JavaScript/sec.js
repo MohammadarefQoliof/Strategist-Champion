@@ -424,12 +424,17 @@ if(allRatingHistoryData.length > 0){
     historySec.textContent = "No entries yet. Log your first rating!"
 }
 
+
+let bin = document.querySelector(".bgBin");
+bin.addEventListener("click", ()=>{
+    deletePlan();
+})
+
 let remainDays = localStorage.getItem(`remainingDays${currentPage}`);
 let resultOverlay = document.querySelector(".resultOverlay");
 let remainingDays = document.querySelector(".remainingDays");
 let removePlanBtn = document.querySelector(".removePlan");
 let backToGoalsBtn = document.querySelector(".backToGoals");
-let bin = document.querySelector(".bgBin");
 let ratingDifferenceIcon = document.querySelector(".ratingDifferenceIcon");
 if (remainDays <= 0){
     let resultDuration = document.querySelector(".durationText");
