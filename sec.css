@@ -747,7 +747,6 @@ hr{
 .ratingDifferenceIcon{
     width: 32px;
     height: 32px;
-    background-image: url("./assets/increase.png");
     background-size: contain;
     background-repeat: no-repeat;
 }

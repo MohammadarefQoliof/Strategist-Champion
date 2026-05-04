@@ -19,14 +19,6 @@ if(fideCheckBox == "true"){
 }else{
     platform2.classList.remove("platform2")
 }
-
-
-let bin = document.querySelector(".bgBin");
-
-bin.addEventListener("click", () => {
-    deletePlan();
-});
-
 let cross = document.querySelector(".bgCross");
 cross.addEventListener("click", ()=>{
     window.location.href = "index.html";
@@ -429,6 +421,8 @@ let resultOverlay = document.querySelector(".resultOverlay");
 let remainingDays = document.querySelector(".remainingDays");
 let removePlanBtn = document.querySelector(".removePlan");
 let backToGoalsBtn = document.querySelector(".backToGoals");
+let bin = document.querySelector(".bgBin");
+let ratingDifferenceIcon = document.querySelector(".ratingDifferenceIcon");
 if (remainDays <= 0){
     let resultDuration = document.querySelector(".durationText");
     let resultRatingDifference = document.querySelector(".ratingDifferenceText");
@@ -438,11 +432,14 @@ if (remainDays <= 0){
     if(Number(localStorage.getItem(`ratingDifference${currentPage}`)) > 0){
         resultRatingDifference.textContent = `+${localStorage.getItem(`ratingDifference${currentPage}`)} pts`
         resultRatingDifference.style.color = "lightGreen"
+        ratingDifferenceIcon.style.backgroundImage = `url("./assets/increase.png")`
     }else if(Number(localStorage.getItem(`ratingDifference${currentPage}`)) < 0){
         resultRatingDifference.textContent = `${localStorage.getItem(`ratingDifference${currentPage}`)} pts`
         resultRatingDifference.style.color = "red"
+        ratingDifferenceIcon.style.backgroundImage = `url("./assets/decrease.png")`
     }else{
         resultRatingDifference.textContent = `${localStorage.getItem(`ratingDifference${currentPage}`)} pts`
+        ratingDifferenceIcon.style.backgroundImage = `url("./assets/increase.png")`
     }
 
 
@@ -459,69 +456,15 @@ if (remainDays <= 0){
     logRatingBtn.addEventListener("click", ()=>{
         resultOverlay.style.display = "flex";
     })
+    bin.addEventListener("click", () => {
+        deletePlan();
+    });
 }else{
     remainingDays.textContent = localStorage.getItem(`remainingDays${currentPage}`);
     logRatingBtn.addEventListener("click", ()=>{
         overlay.style.display = "flex";
     })
-}
-
-
-// Functions
-function deletePlan(){
-    let keys = [
-        "chesstitle",
-        "mode",
-        "platform",
-        "currentRating",
-        "startRating",
-        "dateNum",
-        "dateName",
-        "checkBox",
-        "startMonth",
-        "startDay",
-        "fideRating",
-        "currentFideRating",
-        "fideDateNum",
-        "fideDateName",
-        "fideLeftDays",
-        "remainingDays",
-        "passedDays",
-        "fideRatingDifference",
-        "ratingDifference",
-        "ratingHistory",
-        "ratingDifferenceList",
-        "allRatingHistory",
-        "startYear",
-        "lastDay",
-        "lastMonth",
-        "lastYear"
-    ];
-
-    let deleteIndex = Number(localStorage.getItem("currentPage"));
-    let totalItems = Number(localStorage.getItem("pageNumber"));
-
-    for (let i = deleteIndex; i < totalItems; i++) {
-        keys.forEach(key => {
-            let nextValue = localStorage.getItem(key + (i + 1));
-
-            if (nextValue !== null) {
-                localStorage.setItem(key + i, nextValue);
-            } else {
-                localStorage.removeItem(key + i);
-            }
-        });
-    }
-
-    keys.forEach(key => {
-        localStorage.removeItem(key + totalItems);
+    bin.addEventListener("click", () => {
+        overlay.style.display = "flex";
     });
-
-    localStorage.setItem("pageNumber", totalItems - 1);
-
-    if (deleteIndex > totalItems - 1) {
-        localStorage.setItem("currentPage", totalItems - 1);
-    }
-
-    window.location.href = "index.html";
 }
