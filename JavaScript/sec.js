@@ -381,30 +381,38 @@ if(allRatingHistoryData.length > 0){
         }else{
             ratingHistoryDiv.classList.add("ratingHistoryDiv");
         }
-        
+
+
+        let remainDays = localStorage.getItem(`remainingDays${currentPage}`);
+        let resultOverlay = document.querySelector(".resultOverlay");
         backgroundBin.addEventListener("click", ()=>{
-            let ratingDifferenceList = JSON.parse(localStorage.getItem(`ratingDifferenceList${currentPage}`)) || []
-            if (allRatingHistoryData[i].type == "normal"){
-                let currentRating = Number(localStorage.getItem(`currentRating${currentPage}`))
-                
-                currentRating -= Number(ratingDifferenceList[i])
-                ratingDifferenceList.splice(i, 1)
-                
-                localStorage.setItem(`currentRating${currentPage}`, currentRating)
+            if (remainDays <= 0){
+                resultOverlay.style.display = "flex";
+                return;
             }else{
-                let currentFideRating = Number(localStorage.getItem(`currentFideRating${currentPage}`))
-                currentFideRating -= Number(ratingDifferenceList[i])
-                ratingDifferenceList.splice(i, 1)
+                let ratingDifferenceList = JSON.parse(localStorage.getItem(`ratingDifferenceList${currentPage}`)) || []
+                if (allRatingHistoryData[i].type == "normal"){
+                    let currentRating = Number(localStorage.getItem(`currentRating${currentPage}`))
+                    
+                    currentRating -= Number(ratingDifferenceList[i])
+                    ratingDifferenceList.splice(i, 1)
+                    
+                    localStorage.setItem(`currentRating${currentPage}`, currentRating)
+                }else{
+                    let currentFideRating = Number(localStorage.getItem(`currentFideRating${currentPage}`))
+                    currentFideRating -= Number(ratingDifferenceList[i])
+                    ratingDifferenceList.splice(i, 1)
+                    
+                    localStorage.setItem(`currentFideRating${currentPage}`, currentFideRating)
+                }
                 
-                localStorage.setItem(`currentFideRating${currentPage}`, currentFideRating)
+                allRatingHistoryData.splice(i, 1)
+        
+                localStorage.setItem(`ratingDifferenceList${currentPage}`, JSON.stringify(ratingDifferenceList))
+                localStorage.setItem(`allRatingHistory${currentPage}`, JSON.stringify(allRatingHistoryData))
+                
+                location.reload()
             }
-            
-            allRatingHistoryData.splice(i, 1)
-    
-            localStorage.setItem(`ratingDifferenceList${currentPage}`, JSON.stringify(ratingDifferenceList))
-            localStorage.setItem(`allRatingHistory${currentPage}`, JSON.stringify(allRatingHistoryData))
-            
-            location.reload()
         })
 
         ratingHistoryMainDiv.append(ratingHistoryDiv);
@@ -456,15 +464,9 @@ if (remainDays <= 0){
     logRatingBtn.addEventListener("click", ()=>{
         resultOverlay.style.display = "flex";
     })
-    bin.addEventListener("click", () => {
-        deletePlan();
-    });
 }else{
     remainingDays.textContent = localStorage.getItem(`remainingDays${currentPage}`);
     logRatingBtn.addEventListener("click", ()=>{
         overlay.style.display = "flex";
     })
-    bin.addEventListener("click", () => {
-        overlay.style.display = "flex";
-    });
 }
