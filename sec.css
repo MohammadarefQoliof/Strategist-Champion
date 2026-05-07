@@ -471,6 +471,7 @@ hr{
     gap: 7px;
     transition: 0.3s;
     margin: 30px 0 0 0;
+    cursor: default;
 }
 .fideBtn:hover{
     background-color: rgba(255, 166, 0, 0.15);

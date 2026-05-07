@@ -256,10 +256,15 @@ checkBox.addEventListener("change", () => {
             ratingInput.type = "number"
             ratingInput.placeholder = "e.g. 1450"
 
-            dateTitle.textContent = "PRACTICE PHASE DURATION"
-            dateDesc.textContent = "How long you will train on your platform before the competition"
-            dateInput.type = "Number"
+            dateTitle.textContent = "CMPETITION PHASE DURATION"
+            dateDesc.textContent = "How long will the FIDE tourmanet be held for"
+            dateInput.type = "number"
             dateInput.value = "1"
+            // dateInput.addEventListener("input", () => {
+            //     if (dateInput.value < 0) {
+            //         dateInput.value = 1
+            //     }
+            // })
             dateDay.value = "day"
             dateWeek.value = "week"
             dateDay.textContent = "Day"

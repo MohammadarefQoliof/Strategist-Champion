@@ -142,8 +142,17 @@ if(fideCheckBox == "true"){
     inputForFide.value = localStorage.getItem(`currentFideRating${currentPage}`)
     
     let overlayForFide = document.querySelector(".overlayForFide")
+
+    let remainDays = localStorage.getItem(`remainingDays${currentPage}`);
+    let resultOverlay = document.querySelector(".resultOverlay");
+    console.log(remainDays);
+    
     fideLogRating.addEventListener("click", ()=>{
-        overlayForFide.style.display = "flex"
+        if (remainDays <= 0){
+            resultOverlay.style.display = "flex";
+        }else{
+            overlayForFide.style.display = "flex"
+        }
     })
     
     let cancelForFideBtn = document.querySelector(".cancelForFide");
