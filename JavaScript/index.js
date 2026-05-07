@@ -257,7 +257,7 @@ checkBox.addEventListener("change", () => {
             ratingInput.placeholder = "e.g. 1450"
 
             dateTitle.textContent = "CMPETITION PHASE DURATION"
-            dateDesc.textContent = "How long will the FIDE tourmanet be held for"
+            dateDesc.textContent = "How long will be the fide tournament held"
             dateInput.type = "number"
             dateInput.value = "1"
             dateInput.addEventListener("input", () => {
