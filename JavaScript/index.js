@@ -260,11 +260,11 @@ checkBox.addEventListener("change", () => {
             dateDesc.textContent = "How long will the FIDE tourmanet be held for"
             dateInput.type = "number"
             dateInput.value = "1"
-            // dateInput.addEventListener("input", () => {
-            //     if (dateInput.value < 0) {
-            //         dateInput.value = 1
-            //     }
-            // })
+            dateInput.addEventListener("input", () => {
+                if (dateInput.value < 0) {
+                    dateInput.value = 1
+                }
+            })
             dateDay.value = "day"
             dateWeek.value = "week"
             dateDay.textContent = "Day"
