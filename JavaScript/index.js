@@ -143,7 +143,10 @@ if (pageNumber == 0) {
         if (leftDays < 0) {
             time.style.color = "red";
             time.textContent = `Done`;
-        } else {
+        }else if (leftDays == 0){
+            time.style.color = "red";
+            time.textContent = `Last Day`;
+        }else {
             time.textContent = `${leftDays}d`;
         }
 
