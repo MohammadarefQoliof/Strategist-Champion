@@ -148,7 +148,7 @@ if(fideCheckBox == "true"){
     console.log(remainDays);
     
     fideLogRating.addEventListener("click", ()=>{
-        if (remainDays < 0){
+        if (remainDays <= 0){
             resultOverlay.style.display = "flex";
         }else{
             overlayForFide.style.display = "flex"
@@ -395,7 +395,7 @@ if(allRatingHistoryData.length > 0){
         let remainDays = localStorage.getItem(`remainingDays${currentPage}`);
         let resultOverlay = document.querySelector(".resultOverlay");
         backgroundBin.addEventListener("click", ()=>{
-            if (remainDays < 0){
+            if (remainDays <= 0){
                 resultOverlay.style.display = "flex";
                 return;
             }else{
@@ -461,7 +461,7 @@ let remainingDays = document.querySelector(".remainingDays");
 let removePlanBtn = document.querySelector(".removePlan");
 let backToGoalsBtn = document.querySelector(".backToGoals");
 let ratingDifferenceIcon = document.querySelector(".ratingDifferenceIcon");
-if (remainDays < 0){
+if (remainDays <= 0){
     let resultDuration = document.querySelector(".durationText");
     let resultRatingDifference = document.querySelector(".ratingDifferenceText");
     let finalRating = document.querySelector(".finalRatingText");
