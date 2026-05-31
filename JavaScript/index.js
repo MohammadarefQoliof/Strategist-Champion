@@ -140,10 +140,10 @@ if (pageNumber == 0) {
         localStorage.setItem(`remainingDays${i}`, leftDays);
         localStorage.setItem(`passedDays${i}`, passedDays);
         
-        if (leftDays < 0) {
+        if (leftDays <= 0) {
             time.style.color = "red";
             time.textContent = `Done`;
-        }else if (leftDays == 0){
+        }else if (leftDays == 1){
             time.style.color = "red";
             time.textContent = `Last Day`;
         }else {
